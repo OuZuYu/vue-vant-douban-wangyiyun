@@ -1,4 +1,5 @@
-# vant-shop
+# vue-vant-douban
+# 移动端豆瓣电影
 
 ## Project setup
 ```
