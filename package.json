@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "vant": "^1.5.1",
     "vue": "^2.5.21",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
@@ -14,13 +15,21 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
     "@vue/cli-service": "^3.2.0",
+    "babel-plugin-import": "^1.11.0",
     "node-sass": "^4.9.0",
+    "postcss-pxtorem": "^4.0.1",
     "sass-loader": "^7.0.1",
     "vue-template-compiler": "^2.5.21"
   },
   "postcss": {
     "plugins": {
-      "autoprefixer": {}
+      "autoprefixer": {},
+      "postcss-pxtorem": {
+        "rootValue": 75,
+        "propList": [
+          "*"
+        ]
+      }
     }
   },
   "browserslist": [
