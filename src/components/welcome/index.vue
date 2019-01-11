@@ -1,5 +1,6 @@
 <template>
     <div class="welcome" v-if="isWelcomeShow">
+        <van-tag class="close-welcome-btn" round @click.native="hideWelcome">跳过 {{ second }}</van-tag>
         <h3 class="title">welcome</h3>
 
         <div class="emoji">
@@ -39,26 +40,31 @@ export default {
         },
 
         isWelcomeShow () {
-            console.log(this.second)
             return this.second !== 0;
         }
     },
 
     data () {
         return {
+            timer: null,
             second: 3
         }
     },
 
     methods: {
         autoHideWelcome () {
-            let timer = setInterval(() => {
+            this.timer = setInterval(() => {
                 if (this.second === 0) {
-                    clearInterval(timer);
+                    clearInterval(this.timer);
                     return;
                 }
                 this.second--;
             }, 1000);
+        },
+
+        hideWelcome () {
+            clearInterval(this.timer);
+            this.second = 0;
         }
     },
 
@@ -78,16 +84,22 @@ export default {
     background: #fff;
     text-align: center;
 
+    .close-welcome-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+    }
+
     .title {
         margin: 120px 0;
         font-size: 50px;
-        color: #42bd56;
+        color: $theme;
     }
 }
 
 .emoji {
     font-size: 100px;
-    color: #42bd56;
+    color: $theme;
 
     .eyes {
         text-align: center;
@@ -100,7 +112,7 @@ export default {
     .mouth {
         width: 40px;
         height: 6px;
-        background: #42bd56;
+        background: $theme;
         margin: 4px auto 0;
     }
 }
@@ -108,7 +120,7 @@ export default {
 .date, .location {
     margin-top: 40px;
     font-size: 30px;
-    color: #42bd56;
+    color: $theme;
 }
 
 .douban-logo-wrap {
