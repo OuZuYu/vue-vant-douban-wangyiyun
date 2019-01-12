@@ -41,6 +41,7 @@ export default {
         text-align: center;
         flex-direction: column;
         justify-content: center;
+        color: $gray-deep;
 
         &.router-link-active {
             color: #42bd56;

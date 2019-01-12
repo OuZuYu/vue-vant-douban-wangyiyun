@@ -6,5 +6,17 @@ module.exports = {
                 data: `@import "@/scss/variable.scss";`
             }
         }
+    },
+    devServer: {
+        proxy: {
+            '/db': {
+                target: 'https://api.douban.com',
+                changeOrigin: true,
+                ws: true,
+                pathRewrite: {
+                    '^/db': ''
+                }
+            }
+        }
     }
 }
