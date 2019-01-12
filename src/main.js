@@ -9,11 +9,10 @@ import './scss/index.scss';
 
 // import directive
 import './directive';
-import { Button, Cell, Row, Col, Notify  } from 'vant';
 
-[Button, Cell, Row, Col, Notify].forEach(component => {
-  Vue.use(component);
-});
+// import vant
+import './vant';
+
 Vue.config.productionTip = false
 
 new Vue({
