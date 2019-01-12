@@ -14,15 +14,18 @@
         <div class="date">{{ currentDate }}</div>
         <div class="location">您位于：{{myCity}}</div>
         <div class="douban-logo-wrap">
-            <img class="logo" src="./douban-logo.png" alt="logo">
+            <img class="logo" src="../../assets/douban-logo.png" alt="logo">
         </div>
     </div>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from 'vuex';
+import location from '@/mixins/location.js';
 
 export default {
+    mixins: [ location ],
+
     computed: {
         ...mapState({
             myCity: state => state.location.myCity,
@@ -69,6 +72,7 @@ export default {
     },
 
     created () {
+        this.getCity();
         this.autoHideWelcome();
     }
 }
@@ -76,6 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .welcome {
+    z-index: 10001;
     position: fixed;
     left: 0;
     top: 0;
@@ -91,46 +96,46 @@ export default {
     }
 
     .title {
-        margin: 120px 0;
+        margin: 60px 0;
         font-size: 50px;
         color: $theme;
     }
 }
 
 .emoji {
-    font-size: 100px;
+    font-size: 50px;
     color: $theme;
 
     .eyes {
         text-align: center;
         .left-eye, .right-eye {
             display: inline-block;
-            width: 100px;
+            width: 70px;
         }
     }
 
     .mouth {
-        width: 40px;
-        height: 6px;
+        width: 30px;
+        height: 4px;
         background: $theme;
-        margin: 4px auto 0;
+        margin: 0 auto;
     }
 }
 
 .date, .location {
     margin-top: 40px;
-    font-size: 30px;
+    font-size: 18px;
     color: $theme;
 }
 
 .douban-logo-wrap {
     position: fixed;
     left: 50%;
-    bottom: 100px;
+    bottom: 20px;
     transform: translateX(-50%);
 
     .logo {
-        width: 130px;
+        width: 80px;
     }
 }
 </style>
