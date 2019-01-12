@@ -1,13 +1,18 @@
 import { getDistance, cssUtils } from '@/utils/dom';
 import loadingGif from './loading.gif';
 
+const LOADING_WRAP_ID = 'loadingWrap';
+const LOADING_ID = 'loadingGif'
+let loadingCount = 1;
+
 function createLoading(left, top, width, height,) {
     let mask = document.createElement('div');
     let loading = document.createElement('img');
 
-    mask.id = 'loadingWrap';
+    mask.id = LOADING_WRAP_ID + loadingCount;
+    loadingCount++;
     cssUtils.setCss(mask, {
-        'zIndex': '99999',
+        'zIndex': '10000',
         'display': 'flex',
         'justify-content': 'center',
         'align-items': 'center',
@@ -20,7 +25,7 @@ function createLoading(left, top, width, height,) {
         'text-align': 'center'
     });
 
-    loading.id = 'loadingGif';
+    loading.id = LOADING_ID;
     loading.src = loadingGif;
     cssUtils.setCss(loading, {
         width: '40%',
@@ -42,8 +47,11 @@ function toggleLoading (el, binding) {
             let loadingDom = createLoading(left, top, width, height);
             document.body.appendChild(loadingDom);
         } else { // 关闭
-            let loadingDom = document.querySelector("#loadingWrap");
-            if (loadingDom) document.body.removeChild(loadingDom);
+            for (let i = 0; i < loadingCount; i++) {
+                let loadingDom = document.getElementById(LOADING_WRAP_ID + i);
+                if (loadingDom) document.body.removeChild(loadingDom);
+            }
+            loadingCount = 1;
         }
     }, 0);
 }
