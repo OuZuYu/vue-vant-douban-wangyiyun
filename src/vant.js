@@ -1,19 +1,17 @@
 import Vue from 'vue';
-import { Button, Cell, Row, Col, Notify, Tag, Field, Lazyload, List, Swipe, SwipeItem, Rate  } from 'vant';
+import { Cell, Row, Col, Notify, Tag, Lazyload, List, Rate, Tab, Tabs  } from 'vant';
 
 [
-    Button,
     Cell,
     Row,
     Col,
     Notify,
     Tag,
-    Field,
     Lazyload,
     List,
-    Swipe,
-    SwipeItem,
-    Rate
+    Rate,
+    Tab,
+    Tabs
 ].forEach(component => {
     Vue.use(component);
 });
