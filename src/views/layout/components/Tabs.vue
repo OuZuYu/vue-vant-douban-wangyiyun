@@ -4,7 +4,7 @@
             <i class="iconfont icon-fangyingji"></i>
             <div class="text">热映</div>
         </router-link>
-        <router-link tag="div" to="/douban/movie-detail" class="tab-item">
+        <router-link tag="div" to="/douban/movie-rank" class="tab-item">
             <i class="iconfont icon-jiaoyiliangzongpaixing"></i>
             <div class="text">排行</div>
         </router-link>
