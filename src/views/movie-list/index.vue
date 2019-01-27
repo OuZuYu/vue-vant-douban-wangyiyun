@@ -11,16 +11,7 @@
 
         <div class="city-movie-wrap">
             <van-cell :title="movieData.title" icon="location-o" />
-            <ul class="movie-wrap" v-loading="cityMovieLoading">
-                <li class="city-movie-item" v-for="movie of movieData.subjects" :key="movie.id">
-                    <img class="img" v-lazy="movie.images.small">
-                    <div class="title van-ellipsis">{{ movie.title }}</div>
-                    <div class="rate">
-                        <van-rate :size="10" readonly v-model="movie.rating.stars / 10" />
-                        <span class="text">{{ movie.rating.average }}</span>
-                    </div>
-                </li>
-            </ul>
+            <horizontallist v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
         </div>
 
         <van-tabs color="#42bd56" class="movie-tabs">
@@ -32,7 +23,7 @@
                         :finished="isTop250Loaded"
                         finished-text="没有更多了"
                         @load="getTop250Movie">
-                        <list :list-data="top250Data"></list>
+                        <verticallist :list-data="top250Data" @selectMovie="handleMovieSelect"></verticallist>
                     </van-list>
                 </div>
             </van-tab>
@@ -44,11 +35,13 @@
                         :finished="isComingSoonLoaded"
                         finished-text="没有更多了"
                         @load="getComingSoonMovie">
-                            <list :list-data="comingSoonData"></list>
+                            <verticallist :list-data="comingSoonData" @selectMovie="handleMovieSelect"></verticallist>
                     </van-list>
                 </div>
             </van-tab>
         </van-tabs>
+
+        <moviedetail :movie="selectedMovie"></moviedetail>
     </div>
 </template>
 
@@ -60,12 +53,14 @@ import {
 } from '@/api/douban';
 import { mapState } from 'vuex'
 import location from '@/mixins/location.js';
-import list from './components/List';
+import verticallist from './components/VerticalList';
+import horizontallist from './components/HorizontalList';
+import moviedetail from './components/MovieDetail';
 
 const GET_COUNT = 10;
 
 export default {
-    components: { list },
+    components: { verticallist, horizontallist, moviedetail },
 
     mixins: [ location ],
 
@@ -87,11 +82,30 @@ export default {
             isTop250Loaded: false,
             isComingSoonLoaded: false,
             top250Index: 0,
-            comingSoonIndex: 0
+            comingSoonIndex: 0,
+            selectedMovie: {},
+            detailComp: null
         }
     },
 
     methods: {
+        handleMovieSelect (movie) {
+            this.selectedMovie = movie;
+            this.showDetail();
+        },
+
+        showDetail () {
+            this.detailComp = this.detailComp || this.$createMovieDetail({
+                $props: {
+                    movie: 'selectedMovie'
+                }
+            })
+            this.detailComp.show()
+            this.$nextTick(_ => {
+                this.detailComp.init()
+            })
+        },
+
         getCityMovie () {
             this.cityMovieLoading = true;
             let params = {
@@ -176,40 +190,6 @@ $city-movie-height: 234px;
 .city-movie-wrap {
     height: $city-movie-height;
     margin-bottom: 10px;
-    .movie-wrap {
-        height: 200px;
-        white-space: nowrap;
-        overflow-y: hidden;
-        overflow-x: auto;
-    }
-}
-
-
-.city-movie-item {
-    display: inline-block;
-    vertical-align: top;
-    width: 100px;
-    margin-left: 10px;
-
-    &:last-child {
-        margin-right: 10px;
-    }
-
-    .img {
-        width: 100px;
-        height: 142px;
-    }
-
-    .title {
-        margin: 10px 0;
-        font-size: 14px;
-        text-align: center;
-    }
-
-    .rate {
-        display: flex;
-        justify-content: space-between;
-    }
 }
 
 .movie-tabs {

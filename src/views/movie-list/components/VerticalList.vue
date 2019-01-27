@@ -1,6 +1,6 @@
 <template>
     <ul>
-        <li class="movie-item" v-for="movie of listData" :key="movie.id">
+        <li @click="handleMovieClick(movie)" class="movie-item" v-for="movie of listData" :key="movie.id">
             <img class="img" v-lazy="movie.images.small" height="120" width="80">
 
             <div class="movie-info">
@@ -23,7 +23,7 @@
 
 <script>
 export default {
-    name: 'List',
+    name: 'VerticalList',
 
     props: {
         listData: {
@@ -37,6 +37,12 @@ export default {
     data () {
         return {
 
+        }
+    },
+
+    methods: {
+        handleMovieClick (movie) {
+            this.$emit('selectMovie', movie);
         }
     }
 }
