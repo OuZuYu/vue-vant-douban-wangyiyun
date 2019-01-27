@@ -13,6 +13,9 @@ import './directive';
 // import vant
 import './vant';
 
+// import createApi
+import './createApi';
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -7,8 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "axios": "^0.18.0",
+    "lib-flexible": "^0.3.2",
     "vant": "^1.5.1",
     "vue": "^2.5.21",
+    "vue-create-api": "^0.2.0",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"
   },
@@ -24,7 +27,10 @@
   "postcss": {
     "plugins": {
       "autoprefixer": {
-        "browsers": ["Android >= 4.0", "iOS >= 7"]
+        "browsers": [
+          "Android >= 4.0",
+          "iOS >= 7"
+        ]
       },
       "postcss-pxtorem": {
         "rootValue": 37.5,
