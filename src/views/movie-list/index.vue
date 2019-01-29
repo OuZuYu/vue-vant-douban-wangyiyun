@@ -14,7 +14,7 @@
             <horizontallist v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
         </div>
 
-        <van-tabs color="#42bd56" class="movie-tabs">
+        <van-tabs swipeable color="#42bd56" class="movie-tabs">
             <van-tab title="Top250">
                 <div class="list-wrap" v-loading="top250Loading">
                     <van-list
