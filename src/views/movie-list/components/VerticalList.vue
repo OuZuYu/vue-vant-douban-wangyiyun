@@ -5,7 +5,7 @@
 
             <div class="movie-info">
                 <h3 class="title">{{ movie.title }}</h3>
-                <div class="rate">
+                <div class="rate" v-if="+movie.rating.stars">
                     <van-rate :size="10" readonly v-model="movie.rating.stars / 10" />
                     <span class="text">{{ movie.rating.average }}</span>
                 </div>
@@ -13,9 +13,9 @@
                     导演: <span v-for="director of movie.directors">{{ director.name }}</span>
                 </div>
                 <div class="info van-ellipsis">
-                    主演: <span v-for="cast of movie.casts">{{ cast.name }}</span>
+                    主演: <span class="cast-item" v-for="cast of movie.casts">{{ cast.name }}</span>
                 </div>
-                <div class="has-watched">{{ movie.collect_count }}人看过</div>
+                <div v-if="movie.collect_count" class="has-watched">{{ movie.collect_count }}人看过</div>
             </div>
         </li>
     </ul>
@@ -51,7 +51,7 @@ export default {
 <style lang="scss" scoped>
 .movie-item {
     display: flex;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     padding: 0 10px;
 
     .img {
@@ -60,6 +60,7 @@ export default {
 
     .movie-info {
         flex: 1;
+        width: 0;
         margin-left: 10px;
 
         .title {
@@ -77,9 +78,12 @@ export default {
         }
 
         .info {
-            width: 90%;
             color: $gray-deep;
             margin-bottom: 10px;
+
+            .cast-item {
+                margin-right: 4px;
+            }
         }
 
         .has-watched {

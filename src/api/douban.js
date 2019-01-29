@@ -35,3 +35,14 @@ export function getComingSoonMovie(start, count) {
         params
     })
 }
+
+export function getMovieDetail(id) {
+    const params = {
+        apikey: '0b2bdeda43b5688921839c8ecb20399b'
+    }
+    return request({
+        url: '/v2/movie/subject/' + id,
+        method: 'get',
+        params
+    })
+}
