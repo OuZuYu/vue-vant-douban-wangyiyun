@@ -2,6 +2,7 @@ import { getDistance, cssUtils } from '@/utils/dom';
 import loadingGif from './loading.gif';
 
 const LOADING_WRAP_ID = 'loadingWrap';
+const LOADING_WRAP_CLASS = 'loading-wrap';
 const LOADING_ID = 'loadingGif'
 let loadingCount = 1;
 
@@ -10,6 +11,7 @@ function createLoading(left, top, width, height,) {
     let loading = document.createElement('img');
 
     mask.id = LOADING_WRAP_ID + loadingCount;
+    mask.className = LOADING_WRAP_CLASS;
     loadingCount++;
     cssUtils.setCss(mask, {
         'zIndex': '10000',
