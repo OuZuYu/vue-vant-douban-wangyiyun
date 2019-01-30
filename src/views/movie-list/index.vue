@@ -18,7 +18,7 @@
             <van-tab title="Top250">
                 <div class="list-wrap" v-loading="top250Loading">
                     <van-list
-                        :offset="5"
+                        :offset="0"
                         v-model="top250Loading"
                         :finished="isTop250Loaded"
                         finished-text="没有更多了"
@@ -30,7 +30,7 @@
             <van-tab title="即将上映">
                 <div class="list-wrap" v-loading="comingSoonLoading">
                     <van-list
-                        :offset="5"
+                        :offset="0"
                         v-model="comingSoonLoading"
                         :finished="isComingSoonLoaded"
                         finished-text="没有更多了"
@@ -52,7 +52,8 @@ import {
     getComingSoonMovie
 } from '@/api/douban';
 import { mapState } from 'vuex'
-import location from '@/mixins/location.js';
+import locationMixin from '@/mixins/location';
+import showMovieDetailMixin from '@/mixins/showMovieDetail';
 import verticallist from './components/VerticalList';
 import horizontallist from './components/HorizontalList';
 import moviedetail from './components/MovieDetail';
@@ -62,7 +63,7 @@ const GET_COUNT = 10;
 export default {
     components: { verticallist, horizontallist, moviedetail },
 
-    mixins: [ location ],
+    mixins: [ locationMixin, showMovieDetailMixin ],
 
     computed: {
         ...mapState({
@@ -82,30 +83,11 @@ export default {
             isTop250Loaded: false,
             isComingSoonLoaded: false,
             top250Index: 0,
-            comingSoonIndex: 0,
-            selectedMovie: {},
-            detailComp: null
+            comingSoonIndex: 0
         }
     },
 
     methods: {
-        handleMovieSelect (movie) {
-            this.selectedMovie = movie;
-            this.showDetail();
-        },
-
-        showDetail () {
-            this.detailComp = this.detailComp || this.$createMovieDetail({
-                $props: {
-                    movie: 'selectedMovie'
-                }
-            })
-            this.detailComp.show()
-            this.$nextTick(_ => {
-                this.detailComp.init()
-            })
-        },
-
         getCityMovie () {
             this.cityMovieLoading = true;
             let params = {
@@ -142,10 +124,10 @@ export default {
         },
 
         init () {
-            this.getCity().then(_ => {
+            this.getCity().then(_ => { // 定位
                 this.getCityMovie();
             });
-        },
+        }
     },
 
     created () {

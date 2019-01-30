@@ -2,7 +2,7 @@ import axios from 'axios'
 import store from '../store'
 
 const service = axios.create({
-    baseURL: '/db',
+    baseURL: '/v2',
     timeout: 5000
 })
 

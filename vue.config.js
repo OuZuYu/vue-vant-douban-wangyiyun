@@ -1,4 +1,5 @@
 module.exports = {
+    // baseUrl: './',
     css: {
         loaderOptions: {
             sass: {
@@ -9,12 +10,11 @@ module.exports = {
     },
     devServer: {
         proxy: {
-            '/db': {
+            '/v2': {
                 target: 'https://api.douban.com',
                 changeOrigin: true,
-                ws: true,
                 pathRewrite: {
-                    '^/db': ''
+                    '^/v2': '/v2'
                 }
             }
         }
