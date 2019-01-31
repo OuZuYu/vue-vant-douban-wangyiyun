@@ -5,7 +5,7 @@
                 <img width="38" height="38" src="../../assets/douban-logo.png" alt="logo">
             </van-col>
             <van-col span="20" class="search-wrap">
-                <div class="search">电影 / 艺人</div>
+                <div class="search" @click="search">电影 / 艺人</div>
             </van-col>
         </van-row>
 
@@ -54,9 +54,9 @@ import {
 import { mapState } from 'vuex'
 import locationMixin from '@/mixins/location';
 import showMovieDetailMixin from '@/mixins/showMovieDetail';
-import verticallist from './components/VerticalList';
-import horizontallist from './components/HorizontalList';
-import moviedetail from './components/MovieDetail';
+import verticallist from '@/components/vertical-list';
+import horizontallist from '@/components/horizontal-list';
+import moviedetail from '@/views/movie-detail';
 
 const GET_COUNT = 10;
 
@@ -88,6 +88,10 @@ export default {
     },
 
     methods: {
+        search () {
+            this.$router.push('/search');
+        },
+
         getCityMovie () {
             this.cityMovieLoading = true;
             let params = {

@@ -1,6 +1,6 @@
 import CreateAPI from 'vue-create-api';
 import Vue from 'vue';
-import MovieDetail from '@/views/movie-list/components/MovieDetail';
+import MovieDetail from '@/views/movie-detail';
 
 Vue.use(CreateAPI);
 
