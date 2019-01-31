@@ -2,7 +2,7 @@
     <div>
       <header class="header">
         <img class="avatar" width="100" height="100" src="../../assets/avatar.jpeg">
-        <span class="name">欧企鹅</span>
+        <span class="name">d欧ban</span>
       </header>
 
       <van-tabs swipeable  color="#42bd56" class="tab-wrap">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import verticallist from '@/views/movie-list/components/VerticalList';
+import verticallist from '@/components/vertical-list';
 import { mapState } from 'vuex'
 import showMovieDetailMixin from '@/mixins/showMovieDetail';
 
