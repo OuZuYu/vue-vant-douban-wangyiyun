@@ -13,7 +13,7 @@ export default new Router({
     },
     {
       path: '/douban',
-      component: () => import('@/views/layout/index.vue'),
+      component: () => import('@/views/layout/index.vue'), // layout component
       redirect: '/douban/movie-list',
       children: [{
         path: 'movie-list',
@@ -27,6 +27,10 @@ export default new Router({
         path: 'my-profile',
         component: () => import('@/views/user/index.vue')
       }]
+    },
+    {
+      path: '/search',
+      component: () => import('@/views/search/index.vue')
     }
   ]
 })
