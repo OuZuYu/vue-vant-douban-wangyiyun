@@ -29,7 +29,7 @@ export default new Router({
       }]
     },
     {
-      path: '/search',
+      path: '/douban/search', // 为了配合服务器配置
       component: () => import('@/views/search/index.vue')
     }
   ]

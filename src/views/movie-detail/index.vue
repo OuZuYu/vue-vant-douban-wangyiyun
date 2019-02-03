@@ -1,10 +1,9 @@
 <template>
     <transition name="van-slide-right">
         <div v-loading="loading" class="movie-detail" v-show="visible" ref="movieDetail">
-            <header class="header">
-                <i class="iconfont icon-fanhui back-btn" @click="hide"></i>
-                <h3 class="title"><i class="movie-icon iconfont icon-dianying"></i>电影</h3>
-            </header>
+            <topheader @back="hide">
+                <i class="movie-icon iconfont icon-dianying"></i>电影
+            </topheader>
 
             <div class="poster-wrap">
                 <img class="poster" v-lazy="detailData.images && detailData.images.medium">
@@ -25,10 +24,10 @@
             <section class="casts-wrap van-hairline--top">
                 <h3 class="title">影人</h3>
                 <ul class="casts-list">
-                    <li class="cast-item" v-for="item of directorsAndActors" :key="item.id">
-                        <img v-lazy="item.avatars.small" width="90" height="120">
-                        <div class="name van-ellipsis">{{ item.name }}</div>
-                        <div class="role">{{ item.isDirector ? '导演' : '演员' }}</div>
+                    <li class="cast-item" v-for="cast of directorsAndActors" :key="cast.id" @click="handleCastSelect(cast)">
+                        <img v-lazy="cast.avatars && cast.avatars.small" width="90" height="120">
+                        <div class="name van-ellipsis">{{ cast.name }}</div>
+                        <div class="role">{{ cast.isDirector ? '导演' : '演员' }}</div>
                     </li>
                 </ul>
             </section>
@@ -44,6 +43,7 @@ import populMixin from '@/mixins/popup';
 import operate from './components/Operate';
 import movieinfo from './components/MovieInfo';
 import moviecomment from './components/MovieComment';
+import topheader from '@/components/header';
 
 const SUMMARY_TEXT_NUM = 65
 
@@ -52,7 +52,7 @@ export default {
 
     mixins: [ populMixin ],
 
-    components: { operate, movieinfo, moviecomment },
+    components: { operate, movieinfo, moviecomment, topheader },
 
     props: {
         movie: Object
@@ -78,7 +78,9 @@ export default {
             loading: false,
             directorsAndActors: [],
             isSummaryExpand: false,
-            movieObj: null
+            movieObj: null,
+            castDetailComp: null,
+            selectedCast: {}
         }
     },
 
@@ -101,6 +103,25 @@ export default {
             this.directorsAndActors = [...directorsWithMark, ...detailData.casts];
         },
 
+        handleCastSelect(cast) {
+            this.selectedCast = cast;
+            this.showCastDetail();
+        },
+
+        showCastDetail () {
+
+            // 调用castDetail组件api
+            this.castDetailComp = this.castDetailComp || this.$createCastDetail({
+                $props: {
+                    cast: 'selectedCast'
+                }
+            })
+            this.castDetailComp.show()
+            this.$nextTick(_ => {
+                this.castDetailComp.init()
+            })
+        },
+
         async init () {
             this.$refs.movieDetail.scrollTop = 0; // 初始化滚动条
             await this.getDetail();
@@ -112,46 +133,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$header-bg: rgba(85,85,85,.6);
+@import '../../scss/mixin';
 $poster-bg: #555;
 
 .movie-detail {
+    @include fixedLayout;
     z-index: 1000;
-    position: fixed;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    background: $white;
-    overflow: auto;
-}
-
-.header {
-    z-index: 100;
-    position: fixed;
-    width: 100%;
-    height: 40px;
-    line-height: 40px;
-    text-align: center;
-    background: $header-bg;
-    color: $white;
-
-    .back-btn {
-        position: absolute;
-        left: 14px;
-        top: -6px;
-        font-size: 20px;
-        padding: 6px;
-    }
-
-    .title {
-        font-size: 20px;
-
-        .movie-icon {
-            font-size: 22px;
-            margin-right: 6px;
-        }
-    }
 }
 
 .poster-wrap {
@@ -164,7 +151,7 @@ $poster-bg: #555;
     }
 }
 
-.summary-wrap, .casts-wrap {
+.summary-wrap {
     margin: $wrap-padding;
     padding-top: $wrap-padding;
 
@@ -172,9 +159,6 @@ $poster-bg: #555;
         margin-bottom: 10px;
         color: $gray-deep;
     }
-}
-
-.summary-wrap {
     .content {
         font-size: 14px;
         line-height: 24px;
@@ -186,6 +170,14 @@ $poster-bg: #555;
 }
 
 .casts-wrap {
+    margin: $wrap-padding;
+    padding-top: $wrap-padding;
+
+    .title {
+        margin-bottom: 10px;
+        color: $gray-deep;
+    }
+
     .casts-list {
         display: flex;
         padding-bottom: 12px;

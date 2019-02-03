@@ -21,3 +21,12 @@ export function getDistance(element, type) {
     }
     return distance;
 }
+
+export function delLoading () {
+    let loadingDoms = document.querySelectorAll('.loading-wrap');
+    if (loadingDoms) {
+        for (let loadingDom of loadingDoms) {
+            document.body.removeChild(loadingDom);
+        }
+    }
+}
