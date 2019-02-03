@@ -61,3 +61,14 @@ export function searchMovie (keyword, tag, start, count) {
         params
     })
 }
+
+export function getCastDetail (id) {
+    const params = {
+        apikey: '0b2bdeda43b5688921839c8ecb20399b',
+    }
+    return request({
+        url: '/movie/celebrity/' + id,
+        method: 'get',
+        params
+    })
+}

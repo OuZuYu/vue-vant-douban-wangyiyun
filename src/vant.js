@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { Cell, Row, Col, Notify, Tag, Lazyload, List, Rate, Tab, Tabs, button, Field, Icon } from 'vant';
-import errImg from './assets/img-error.jpg';
+import errImg from './assets/img-error.png';
 import loadingImg from './assets/img-loading.gif';
 
 [

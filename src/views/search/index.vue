@@ -137,10 +137,16 @@ export default {
             return (!res.subjects.length || res.start + res.count > res.total);
         }
     },
+
+    created () {
+        this.keyword = this.$route.query.keyword || '';
+    }
 }
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/mixin';
+
 .input-wrap {
     display: flex;
     justify-content: space-between;
@@ -217,12 +223,7 @@ export default {
 
 .result-list {
     z-index: 10;
-    position: fixed;
-    top: 80px;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background: #fff;
-    overflow: auto;
+    @include fixedLayout(68px, 0, 0, 0);
+    padding-top: 10px;
 }
 </style>
