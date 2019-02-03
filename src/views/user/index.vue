@@ -5,7 +5,7 @@
         <span class="name">d欧ban</span>
       </header>
 
-      <van-tabs swipeable  color="#42bd56" class="tab-wrap">
+      <van-tabs swipeable color="#42bd56" class="tab-wrap">
         <van-tab title="想看">
           <div class="list-wrap" v-if="wantSeeMovies.length">
             <verticallist :list-data="wantSeeMovies" @selectMovie="handleMovieSelect"></verticallist>
@@ -57,6 +57,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../scss/mixin';
 $header-height: 180px;
 
 .header {
@@ -96,6 +97,10 @@ $header-height: 180px;
     .tip-item {
       margin-top: 10px;
     }
+  }
+
+  /deep/ .van-tab__pane {
+    @include fixedLayout($header-height + 50px, 0, 60px, 0);
   }
 }
 </style>

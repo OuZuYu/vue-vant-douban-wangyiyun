@@ -1,0 +1,9 @@
+@mixin fixedLayout($top: 0, $right: 0, $bottom: 0, $left: 0, $bg: #fff) {
+    position: fixed;
+    left: $left;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    background: $bg;
+    overflow: auto;
+}

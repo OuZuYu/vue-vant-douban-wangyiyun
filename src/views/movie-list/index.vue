@@ -11,22 +11,10 @@
 
         <div class="city-movie-wrap">
             <van-cell :title="movieData.title" icon="location-o" />
-            <horizontallist v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
+            <horizontallist class="movie-list" v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
         </div>
 
         <van-tabs swipeable color="#42bd56" class="movie-tabs">
-            <van-tab title="Top250">
-                <div class="list-wrap" v-loading="top250Loading">
-                    <van-list
-                        :offset="0"
-                        v-model="top250Loading"
-                        :finished="isTop250Loaded"
-                        finished-text="没有更多了"
-                        @load="getTop250Movie">
-                        <verticallist :list-data="top250Data" @selectMovie="handleMovieSelect"></verticallist>
-                    </van-list>
-                </div>
-            </van-tab>
             <van-tab title="即将上映">
                 <div class="list-wrap" v-loading="comingSoonLoading">
                     <van-list
@@ -39,9 +27,19 @@
                     </van-list>
                 </div>
             </van-tab>
+            <van-tab title="Top250">
+                <div class="list-wrap" v-loading="top250Loading">
+                    <van-list
+                        :offset="0"
+                        v-model="top250Loading"
+                        :finished="isTop250Loaded"
+                        finished-text="没有更多了"
+                        @load="getTop250Movie">
+                        <verticallist :list-data="top250Data" @selectMovie="handleMovieSelect"></verticallist>
+                    </van-list>
+                </div>
+            </van-tab>
         </van-tabs>
-
-        <moviedetail :movie="selectedMovie"></moviedetail>
     </div>
 </template>
 
@@ -53,15 +51,14 @@ import {
 } from '@/api/douban';
 import { mapState } from 'vuex'
 import locationMixin from '@/mixins/location';
-import showMovieDetailMixin from '@/mixins/showMovieDetail';
+import showMovieDetailMixin from '@/mixins/showMovieDetail'; // 显示电影详情相关代码
 import verticallist from '@/components/vertical-list';
 import horizontallist from '@/components/horizontal-list';
-import moviedetail from '@/views/movie-detail';
 
 const GET_COUNT = 10;
 
 export default {
-    components: { verticallist, horizontallist, moviedetail },
+    components: { verticallist, horizontallist },
 
     mixins: [ locationMixin, showMovieDetailMixin ],
 
@@ -89,7 +86,7 @@ export default {
 
     methods: {
         search () {
-            this.$router.push('/search');
+            this.$router.push('/douban/search');
         },
 
         getCityMovie () {
@@ -176,6 +173,10 @@ $city-movie-height: 234px;
 .city-movie-wrap {
     height: $city-movie-height;
     margin-bottom: 10px;
+
+    .movie-list {
+        padding-left: 10px;
+    }
 }
 
 .movie-tabs {

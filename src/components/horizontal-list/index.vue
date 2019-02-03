@@ -52,6 +52,10 @@ export default {
     width: 100px;
     margin-left: 10px;
 
+    &:first-child {
+        margin-left: 0;
+    }
+
     &:last-child {
         margin-right: 10px;
     }
@@ -70,6 +74,10 @@ export default {
     .rate {
         display: flex;
         justify-content: space-between;
+
+        /deep/ .van-rate__item {
+            font-size: 13px !important;
+        }
     }
 }
 

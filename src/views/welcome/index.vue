@@ -1,6 +1,6 @@
 <template>
     <div class="welcome" v-if="isWelcomeShow">
-        <van-tag class="close-welcome-btn" round @click.native="hideWelcome">跳过 {{ second }}</van-tag>
+        <van-tag class="close-welcome-btn" round @click.native="hideWelcome" size="large">跳过 {{ second }}</van-tag>
         <h3 class="title">welcome</h3>
 
         <div class="emoji">
@@ -39,7 +39,7 @@ export default {
                 h = date.getHours(),
                 M = date.getMinutes(),
                 s = date.getSeconds();
-            return `${y}年${m}月${d}日 ${h}:${M}:${d}`;
+            return `${y}年${m}月${d}日 ${h}:${M}:${s}`;
         },
 
         isWelcomeShow () {

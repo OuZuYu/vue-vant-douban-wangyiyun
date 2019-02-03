@@ -3,6 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store/index'
 import 'lib-flexible/flexible.js'
+import { delLoading } from '@/utils/dom'
 
 // import scss
 import './scss/index.scss';
@@ -19,12 +20,7 @@ import './createApi';
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {
-  let loadingDoms = document.querySelectorAll('.loading-wrap');
-  if (loadingDoms) {
-    for (let loadingDom of loadingDoms) {
-      document.body.removeChild(loadingDom);
-    }
-  }
+  delLoading();
   next();
 })
 
