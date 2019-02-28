@@ -2,15 +2,15 @@
     <div class="tabs van-hairline--top">
         <router-link tag="div" to="/douban/movie-list" class="tab-item">
             <i class="iconfont icon-fangyingji"></i>
-            <div class="text">热映</div>
+            <!-- <div class="text">电影</div> -->
         </router-link>
-        <!-- <router-link tag="div" to="/douban/movie-rank" class="tab-item">
-            <i class="iconfont icon-jiaoyiliangzongpaixing"></i>
-            <div class="text">排行</div>
-        </router-link> -->
+        <router-link tag="div" to="/wangyi/music" class="tab-item">
+            <i class="iconfont icon-erji1"></i>
+            <!-- <div class="text">音乐</div> -->
+        </router-link>
         <router-link tag="div" to="/douban/my-profile" class="tab-item">
             <i class="iconfont icon-wode1"></i>
-            <div class="text">我的</div>
+            <!-- <div class="text">收藏</div> -->
         </router-link>
     </div>
 </template>
@@ -48,11 +48,7 @@ export default {
         }
 
         .iconfont {
-            font-size: 22px;
-        }
-
-        .text {
-            font-size: 12px;
+            font-size: 28px;
         }
     }
 }
