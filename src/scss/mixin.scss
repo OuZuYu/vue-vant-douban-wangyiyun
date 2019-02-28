@@ -7,3 +7,22 @@
     background: $bg;
     overflow: auto;
 }
+
+@mixin absoluteLayout($top: 0, $right: 0, $bottom: 0, $left: 0) {
+    position: absolute;
+    left: $left;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+}
+
+@mixin heightLineHeight($height) {
+    height: $height;
+    line-height: $height;
+}
+
+@mixin textEllipsis () {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

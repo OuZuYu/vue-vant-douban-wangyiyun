@@ -20,10 +20,6 @@ export default new Router({
         component: () => import('@/views/movie-list/index.vue')
       },
       {
-        path: 'movie-rank',
-        component: () => import('@/views/rank/index.vue')
-      },
-      {
         path: 'my-profile',
         component: () => import('@/views/user/index.vue')
       }]
@@ -31,6 +27,14 @@ export default new Router({
     {
       path: '/douban/search', // 为了配合服务器配置
       component: () => import('@/views/search/index.vue')
+    },
+    {
+      path: '/wangyi',
+      component: () => import('@/views/layout/index.vue'),
+      children: [{
+        path: 'music',
+        component: () => import('@/views/music/index.vue')
+      }]
     }
   ]
 })

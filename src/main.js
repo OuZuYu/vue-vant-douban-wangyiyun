@@ -17,6 +17,9 @@ import './vant';
 // import createApi
 import './createApi';
 
+// 引入自定义ui组件
+import '@/components/my-ui/src';
+
 Vue.config.productionTip = false
 
 router.beforeEach((to, from, next) => {

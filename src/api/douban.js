@@ -4,7 +4,7 @@ export function getMovie(params) {
     params.apikey = '0b2bdeda43b5688921839c8ecb20399b';
 
     return request({
-        url: '/movie/in_theaters',
+        url: '/v2/movie/in_theaters',
         method: 'get',
         params
     })
@@ -17,7 +17,7 @@ export function getTop250Movie(start, count) {
         count
     }
     return request({
-        url: '/movie/top250',
+        url: '/v2/movie/top250',
         method: 'get',
         params
     })
@@ -30,7 +30,7 @@ export function getComingSoonMovie(start, count) {
         count
     }
     return request({
-        url: '/movie/coming_soon',
+        url: '/v2/movie/coming_soon',
         method: 'get',
         params
     })
@@ -41,7 +41,7 @@ export function getMovieDetail(id) {
         apikey: '0b2bdeda43b5688921839c8ecb20399b'
     }
     return request({
-        url: '/movie/subject/' + id,
+        url: '/v2/movie/subject/' + id,
         method: 'get',
         params
     })
@@ -56,7 +56,7 @@ export function searchMovie (keyword, tag, start, count) {
         count
     }
     return request({
-        url: '/movie/search',
+        url: '/v2/movie/search',
         method: 'get',
         params
     })
@@ -67,7 +67,7 @@ export function getCastDetail (id) {
         apikey: '0b2bdeda43b5688921839c8ecb20399b',
     }
     return request({
-        url: '/movie/celebrity/' + id,
+        url: '/v2/movie/celebrity/' + id,
         method: 'get',
         params
     })
