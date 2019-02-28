@@ -1,5 +1,5 @@
 # vue-vant-douban
-# 移动端豆瓣电影
+# vue+vant实现豆瓣电影加网易云音乐webapp - 最佳练手项目
 
 ## Project setup
 ```
