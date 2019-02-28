@@ -2,8 +2,8 @@ import axios from 'axios'
 import store from '../store'
 
 const service = axios.create({
-    baseURL: '/v2',
-    timeout: 5000
+    baseURL: '',
+    timeout: 50000
 })
 
 // 请求拦截
