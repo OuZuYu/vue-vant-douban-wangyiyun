@@ -12,17 +12,7 @@ module.exports = {
         proxy: {
             '/v2': {
                 target: 'https://api.douban.com',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/v2': '/v2'
-                }
-            },
-            '/api': {
-                target: 'http://67.216.223.155:3000',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/api': ''
-                }
+                changeOrigin: true
             }
         }
     }
