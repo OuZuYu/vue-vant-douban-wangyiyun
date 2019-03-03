@@ -97,7 +97,6 @@ import progressbar from '@/components/progress';
 import { getLyric } from '@/api/wangyi';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
-// import Lyric from 'lyric-parser'
 import { scrollTo } from '@/utils/common';
 import { lrc2Json } from '@/utils/song';
 
@@ -161,8 +160,8 @@ export default {
             isPause: true,
             playType: 0,
             LIST_LOOP: 0, // 列表循环常量
-            SINGLE: 1, // 单曲循环常量
-            RANDOM: 2, // 随机播放常量
+            SINGLE: 1, // 单曲循环
+            RANDOM: 2, // 随机播放
             currentTime: 0,
             duration: 0,
             isLyricShow: false,
@@ -240,7 +239,12 @@ export default {
         },
 
         onEnd () {
-            this.changeTrack('next');
+            if (this.playType === this.SINGLE) {
+                this.$refs.audio.currentTime = 0;
+                this.$refs.audio.play();
+            } else {
+                this.changeTrack('next');
+            }
         },
 
         onError () {
