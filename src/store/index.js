@@ -5,6 +5,7 @@ import common from './modules/common'
 import location from './modules/location'
 import collect from './modules/collect'
 import searchHistory from './modules/searchHistory'
+import song from './modules/song'
 
 Vue.use(Vuex)
 
@@ -13,7 +14,8 @@ export default new Vuex.Store({
         common,
         location,
         collect,
-        searchHistory
+        searchHistory,
+        song
     },
 
     getters

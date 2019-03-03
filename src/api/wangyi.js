@@ -41,3 +41,13 @@ export function getPlayList (id) {
         }
     })
 }
+
+export function getMusicUrl (id) {
+    return request({
+        url: '/api/song/url',
+        method: 'get',
+        params: {
+            id
+        }
+    })
+}

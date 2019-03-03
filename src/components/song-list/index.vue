@@ -1,7 +1,7 @@
 <template>
     <div class="song-list">
         <ul class="song-list-ul">
-            <li class="song-list-li" v-for="(item, index) in listData" :key="item.id">
+            <li class="song-list-li" v-for="(item, index) in listData" :key="item.id" @click="handleSongClick(index, item)">
                 <span class="index">{{ index + 1 }}</span>
                 <div class="info">
                     <div class="song-name">{{ item.name }}</div>
@@ -31,7 +31,9 @@ export default {
     },
 
     methods: {
-
+        handleSongClick (item) {
+            this.$emit('selectSong', item);
+        }
     }
 }
 </script>

@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import { Cell, Row, Col, Notify, Tag, Lazyload, List, Rate, Tab, Tabs, button, Field, Icon } from 'vant';
+import { Cell, Row, Col, Notify, Tag, Lazyload, List, Rate, Tab, Tabs, button, Field, Icon, Toast } from 'vant';
 import errImg from './assets/img-error.png';
 import loadingImg from './assets/img-loading.gif';
 
@@ -15,7 +15,8 @@ import loadingImg from './assets/img-loading.gif';
     Tabs,
     button,
     Field,
-    Icon
+    Icon,
+    Toast
 ].forEach(component => {
     Vue.use(component);
 });

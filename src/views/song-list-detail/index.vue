@@ -2,17 +2,17 @@
     <transition name="slide">
         <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-loading="loading" v-show="visible">
             <div class="top">
-                <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ songListImg })` }"></div>
+                <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ playListData.coverImgUrl })` }"></div>
 
                 <topheader :class="{'header-bg': !changeTopStyle}" @back="hide">{{ !changeTopStyle ? '歌单' : playListData.name }}</topheader>
 
-                <img class="top-img" v-lazy="songListImg" width="130" height="130">
+                <img class="top-img" v-lazy="playListData.coverImgUrl" width="130" height="130">
 
                 <div class="list-name">{{ playListData.name }}</div>
             </div>
 
             <div class="list-wrap">
-                <songlist :list-data="playListData.tracks"></songlist>
+                <songlist :list-data="playListData.tracks" @selectSong="handleSongSelect"></songlist>
             </div>
         </div>
     </transition>
@@ -24,6 +24,7 @@ import { getPlayList } from '@/api/wangyi';
 import topheader from '@/components/header';
 import songlist from '@/components/song-list';
 import { setSongData } from '@/utils/song';
+import { mapActions } from 'vuex'
 
 export default {
     name: 'SongList',
@@ -37,12 +38,8 @@ export default {
     },
 
     computed: {
-        songListImg () {
-            return this.playListData.coverImgUrl;
-        },
-
         coverBgHeight () {
-            return this.$refs.coverBg.scrollHeight;
+            return this.$refs.coverBg.offsetHeight;
         }
     },
 
@@ -50,13 +47,39 @@ export default {
         return {
             playListData: {},
             loading: false,
-            changeTopStyle: false
+            changeTopStyle: false,
+            songPlayComp: null
         }
     },
 
     methods: {
+        ...mapActions([
+            'SetTracks',
+            'SetSongIndex',
+            'ChangeIsFullScreen'
+        ]),
+
         init () {
+            this.$refs.songListDetail.scrollTop = 0;
             this.getPlayList(this.id);
+        },
+
+        handleSongSelect (index, item) {
+            this.SetTracks(this.playListData.tracks);
+            this.SetSongIndex(index);
+
+            // 渲染全屏版的播放器
+            this.ChangeIsFullScreen(true);
+        },
+
+        showSongPlay () {
+
+            // 创建songlist组件api
+            this.songPlayComp = this.songPlayComp || this.$createMusicPlay({});
+            this.songPlayComp.show();
+            // this.$nextTick(_ => {
+            //     this.songPlayComp.init();
+            // })
         },
 
         handleListScroll (e) {
@@ -65,7 +88,7 @@ export default {
 
         getPlayList (id) {
             this.loading = true;
-            getPlayList(id).then(val => {
+            return getPlayList(id).then(val => {
                 if (val.code === 200) {
                     this.playListData = setSongData(val.playlist);
                 }
@@ -91,7 +114,7 @@ $top-height: 270px;
 
 .song-list-detail {
     @include fixedLayout;
-    z-index: 1000;
+    z-index: 100;
 }
 
 .top {
@@ -100,6 +123,7 @@ $top-height: 270px;
 
     .cover-bg {
         z-index: 1;
+        opacity: .8;
         position: relative;
         width: 100%;
         height: 100%;
@@ -123,6 +147,7 @@ $top-height: 270px;
         z-index: 2;
         @include absoluteLayout(50%, auto, auto, 50%);
         transform: translate3d(-50%, -50%, 0);
+        border-radius: 4px;
     }
 
     .list-name {
