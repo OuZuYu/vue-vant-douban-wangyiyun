@@ -13,8 +13,9 @@
 
         <div class="date">{{ currentDate }}</div>
         <div class="location">您位于：{{myCity}}</div>
-        <div class="douban-logo-wrap">
+        <div class="logo-wrap">
             <img class="logo" src="../../assets/douban-logo.png" alt="logo">
+            <img class="logo" src="../../assets/wangyi-logo.gif" alt="logo">
         </div>
     </div>
 </template>
@@ -96,7 +97,7 @@ export default {
     }
 
     .title {
-        margin: 60px 0;
+        margin: 40px 0;
         font-size: 50px;
         color: $theme;
     }
@@ -128,14 +129,15 @@ export default {
     color: $theme;
 }
 
-.douban-logo-wrap {
+.logo-wrap {
+    width: 100%;
     position: fixed;
-    left: 50%;
     bottom: 20px;
-    transform: translateX(-50%);
 
     .logo {
-        width: 80px;
+        max-width: 77px;
+        max-width: 77px;
+        margin-right: 10px;
     }
 }
 </style>
