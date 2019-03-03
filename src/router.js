@@ -4,7 +4,7 @@ import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   base: process.env.BASE_URL,
   routes: [
     {
@@ -25,7 +25,7 @@ export default new Router({
       }]
     },
     {
-      path: '/douban/search', // 为了配合服务器配置
+      path: '/douban/search',
       component: () => import('@/views/search/index.vue')
     },
     {

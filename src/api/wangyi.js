@@ -3,7 +3,7 @@ import axios from 'axios';
 
 export function getBanner (params) {
     return request({
-        url: '/api/banner',
+        url: 'http://67.216.223.155:3000/banner',
         method: 'get',
         params
     })
@@ -11,7 +11,7 @@ export function getBanner (params) {
 
 export function getPersonalized (params) {
     return request({
-        url: '/api/personalized',
+        url: 'http://67.216.223.155:3000/personalized',
         method: 'get',
         params
     })
@@ -34,7 +34,7 @@ export function getRecommonData (apiNames) {
 
 export function getPlayList (id) {
     return request({
-        url: '/api/playlist/detail',
+        url: 'http://67.216.223.155:3000/playlist/detail',
         method: 'get',
         params: {
             id
@@ -44,7 +44,7 @@ export function getPlayList (id) {
 
 export function getMusicUrl (id) {
     return request({
-        url: '/api/song/url',
+        url: 'http://67.216.223.155:3000/song/url',
         method: 'get',
         params: {
             id

@@ -1,5 +1,5 @@
 module.exports = {
-    // baseUrl: './',
+    baseUrl: './',
     css: {
         loaderOptions: {
             sass: {
