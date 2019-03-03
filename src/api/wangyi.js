@@ -1,9 +1,11 @@
 import request from '@/utils/request';
 import axios from 'axios';
 
+const BASE = 'http://67.216.223.155:3000';
+
 export function getBanner (params) {
     return request({
-        url: 'http://67.216.223.155:3000/banner',
+        url: BASE + '/banner',
         method: 'get',
         params
     })
@@ -11,7 +13,7 @@ export function getBanner (params) {
 
 export function getPersonalized (params) {
     return request({
-        url: 'http://67.216.223.155:3000/personalized',
+        url: BASE + '/personalized',
         method: 'get',
         params
     })
@@ -34,7 +36,7 @@ export function getRecommonData (apiNames) {
 
 export function getPlayList (id) {
     return request({
-        url: 'http://67.216.223.155:3000/playlist/detail',
+        url: BASE + '/playlist/detail',
         method: 'get',
         params: {
             id
@@ -44,7 +46,17 @@ export function getPlayList (id) {
 
 export function getMusicUrl (id) {
     return request({
-        url: 'http://67.216.223.155:3000/song/url',
+        url: BASE + '/song/url',
+        method: 'get',
+        params: {
+            id
+        }
+    })
+}
+
+export function getLyric (id) {
+    return request({
+        url: BASE + '/lyric',
         method: 'get',
         params: {
             id

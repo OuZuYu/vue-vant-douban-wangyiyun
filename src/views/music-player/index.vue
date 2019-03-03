@@ -15,10 +15,27 @@
                     </div>
                 </header>
 
-                <div class="song-img-wrap">
-                    <div class="img-frame">
+                <div class="img-lyric-wrap" @click="isLyricShow = !isLyricShow">
+                    <transition name="fade">
+                    <div class="img-frame" v-show="!isLyricShow">
                         <img class="img" ref="rotateImg" :class="{ rotate: playing, 'pause-rotate': isPause }" width="100%" height="100%" v-lazy="curSong.album && curSong.album.picUrl">
                     </div>
+                    </transition>
+
+                    <transition name="fade">
+                    <div v-show="isLyricShow" class="lyric-wrap" ref="lyricList">
+                        <div class="tip" v-if="lyricTip">{{ lyricTip }}</div>
+                        <div v-else>
+                            <div
+                                ref="lyricItem"
+                                :class="['lyric-text', {'active': activeLyricIndex === index}]"
+                                v-for="(item, index) in lyricData"
+                                :key="index">
+                                    {{item.content}}
+                            </div>
+                        </div>
+                    </div>
+                    </transition>
                 </div>
 
                 <div class="control-wrap">
@@ -77,9 +94,14 @@
 <script>
 import populMixin from '@/mixins/popup';
 import progressbar from '@/components/progress';
-import { getMusicUrl } from '@/api/wangyi';
+import { getLyric } from '@/api/wangyi';
 import { mapGetters } from 'vuex';
 import { mapActions } from 'vuex';
+// import Lyric from 'lyric-parser'
+import { scrollTo } from '@/utils/common';
+import { lrc2Json } from '@/utils/song';
+
+const LYRIC_HEIGHT = 30; // 歌词div高度
 
 export default {
     name: 'MusicPlay',
@@ -105,11 +127,30 @@ export default {
 
         percent () {
             return this.currentTime / this.duration;
+        },
+
+        lyricTip () {
+            return this.lyricLoading ? '加载中...' : this.noLyric ? '暂无歌词' : '';
         }
     },
 
     watch: {
+        // 当前歌曲改变时，加载歌词。
+        curSong (val) {
+            this.getLyric(val.id)
+        },
 
+        // 监听歌词高亮index变化
+        activeLyricIndex (val) {
+            let lyricList = this.$refs.lyricList;
+
+            // 五行以上才开始滚动歌词，每次滚动30px（每个歌词div高度）。
+            if (val > 5) {
+                scrollTo(lyricList, lyricList.scrollTop, (val - 5) * LYRIC_HEIGHT, 1000);
+            } else {
+                scrollTo(lyricList, lyricList.scrollTop, 0, 1000);
+            }
+        }
     },
 
     data () {
@@ -123,7 +164,12 @@ export default {
             SINGLE: 1, // 单曲循环常量
             RANDOM: 2, // 随机播放常量
             currentTime: 0,
-            duration: 0
+            duration: 0,
+            isLyricShow: false,
+            noLyric: false,
+            lyricLoading: false,
+            activeLyricIndex: 0,
+            lyricData: []
         }
     },
 
@@ -187,7 +233,6 @@ export default {
         },
 
         onCanplay (e) {
-            console.log(1231123)
             this.songLoading = false;
             this.playing = true;
             this.isPause = false;
@@ -204,7 +249,30 @@ export default {
         },
 
         onTimeUpdate (e) {
-            this.currentTime = e.target.currentTime
+            this.currentTime = e.target.currentTime;
+            let timeStamp = this.currentTime * 1000; // 当前毫秒
+            this.activeLyricIndex = this.lyricData.findIndex((item, index) => {
+                if (item.ms) {
+
+                    // 找到 当前毫秒比此item大，比下一个item小的index。
+                    return item.ms < timeStamp && this.lyricData[index + 1] ? this.lyricData[index + 1].ms > timeStamp : true
+                }
+            })
+        },
+
+        getLyric (id) {
+            this.noLyric = false;
+            this.lyricLoading = true;
+            getLyric(id).then(val => {
+                if (val.code === 200) {
+                    this.noLyric = !val.lrc;
+                    this.lyricLoading = false;
+
+                    if (this.noLyric) return;
+
+                    this.lyricData = lrc2Json(val.lrc.lyric); // 歌词数据处理
+                }
+            })
         }
     },
 
@@ -215,6 +283,8 @@ export default {
 
 <style lang="scss" scoped>
 @import '../../scss/mixin';
+
+$lyric-height: 30px;
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity .2s;
@@ -290,7 +360,7 @@ export default {
     }
 }
 
-.song-img-wrap {
+.img-lyric-wrap {
     @include absoluteLayout(80px, 0, 170px, 0);
 
     .img-frame {
@@ -387,6 +457,23 @@ export default {
             text-align: center;
             color: #fff;
             font-size: 18px;
+        }
+    }
+}
+
+.lyric-wrap {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    text-align: center;
+    color: #d8d8d8;
+    font-size: 16px;
+
+    .lyric-text {
+        @include heightLineHeight($lyric-height);
+
+        &.active {
+            color: $theme-wy;
         }
     }
 }
