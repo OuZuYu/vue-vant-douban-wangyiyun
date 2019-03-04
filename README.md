@@ -1,4 +1,4 @@
-# vue-vant-douban
+# vue-vant-douban-wangyi
 # vue+vant实现豆瓣电影加网易云音乐webapp
 
 ## Project setup
