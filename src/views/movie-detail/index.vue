@@ -147,6 +147,7 @@ $poster-bg: #555;
     text-align: center;
 
     .poster {
+        min-height: 250px;
         width: 50%;
     }
 }

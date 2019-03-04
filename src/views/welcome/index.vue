@@ -3,14 +3,6 @@
         <van-tag class="close-welcome-btn" round @click.native="hideWelcome" size="large">跳过 {{ second }}</van-tag>
         <h3 class="title">welcome</h3>
 
-        <div class="emoji">
-            <div class="eyes">
-                <span class="left-eye">^</span>
-                <span class="right-eye">^</span>
-            </div>
-            <div class="mouth"></div>
-        </div>
-
         <div class="date">{{ currentDate }}</div>
         <div class="location">您位于：{{myCity}}</div>
         <div class="logo-wrap">
@@ -100,26 +92,6 @@ export default {
         margin: 40px 0;
         font-size: 50px;
         color: $theme;
-    }
-}
-
-.emoji {
-    font-size: 50px;
-    color: $theme;
-
-    .eyes {
-        text-align: center;
-        .left-eye, .right-eye {
-            display: inline-block;
-            width: 70px;
-        }
-    }
-
-    .mouth {
-        width: 30px;
-        height: 4px;
-        background: $theme;
-        margin: 0 auto;
     }
 }
 

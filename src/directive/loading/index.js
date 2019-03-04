@@ -23,7 +23,7 @@ function createLoading(left, top, width, height,) {
         'top': top + 'px',
         'width': width + 'px',
         'height': height + 'px',
-        'background': '#adadad',
+        'background': 'rgba(173, 173, 173, .8)',
         'text-align': 'center'
     });
 
