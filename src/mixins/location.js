@@ -1,18 +1,19 @@
-import { mapActions } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 
 export default {
-    data() {
-        return {
-        }
+    computed: {
+        ...mapState({
+            myCity: state => state.location.myCity
+        })
     },
 
     methods: {
-        ...mapActions({
-            storeCity: 'SetCity'
-        }),
+        ...mapActions([
+            'GetCity'
+        ]),
 
         // 直接用百度地图api获取城市
-        getCity() {
+        /* getCity() {
             return new Promise((resolve, reject) => {
                 if (this.$store.state.location.hasCity) {
                     resolve();
@@ -23,7 +24,7 @@ export default {
                     resolve(res.name);
                 })
             })
-        },
+        }, */
 
         /* 获取位置h5版
         getLocationData () {

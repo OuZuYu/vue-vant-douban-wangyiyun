@@ -4,7 +4,7 @@
         <h3 class="title">welcome</h3>
 
         <div class="date">{{ currentDate }}</div>
-        <div class="location">您位于：{{myCity}}</div>
+        <div class="location">您位于：{{ myCity }}</div>
         <div class="logo-wrap">
             <img class="logo" src="../../assets/douban-logo.png" alt="logo">
             <img class="logo" src="../../assets/wangyi-logo.gif" alt="logo">
@@ -13,17 +13,12 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
-import location from '@/mixins/location.js';
+import locationMixin from '@/mixins/location'; // 定位相关代码
 
 export default {
-    mixins: [ location ],
+    mixins: [ locationMixin ],
 
     computed: {
-        ...mapState({
-            myCity: state => state.location.myCity,
-        }),
-
         currentDate () {
             let date = new Date,
                 y = date.getFullYear(),
@@ -65,7 +60,7 @@ export default {
     },
 
     created () {
-        this.getCity();
+        this.GetCity();
         this.autoHideWelcome();
     }
 }

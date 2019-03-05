@@ -49,7 +49,6 @@ import {
     getTop250Movie,
     getComingSoonMovie
 } from '@/api/douban';
-import { mapState } from 'vuex'
 import locationMixin from '@/mixins/location';
 import showMovieDetailMixin from '@/mixins/showMovieDetail'; // 显示电影详情相关代码
 import verticallist from '@/components/vertical-list';
@@ -60,14 +59,7 @@ const GET_COUNT = 10;
 export default {
     components: { verticallist, horizontallist },
 
-    mixins: [ locationMixin, showMovieDetailMixin ],
-
-    computed: {
-        ...mapState({
-            myCity: state => state.location.myCity,
-            requestLoading: state => state.common.requestLoading
-        })
-    },
+    mixins: [ locationMixin,  showMovieDetailMixin ],
 
     data () {
         return {
@@ -125,13 +117,13 @@ export default {
         },
 
         init () {
-            this.getCity().then(_ => { // 定位
+            this.GetCity().then(_ => { // 定位
                 this.getCityMovie();
             });
         }
     },
 
-    created () {
+    mounted () {
         this.init();
     }
 }
