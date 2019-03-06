@@ -10,7 +10,12 @@
         </van-row>
 
         <div class="city-movie-wrap">
-            <van-cell :title="movieData.title" icon="location-o" />
+            <van-cell icon="location-o">
+                <template slot="title">
+                    <span>{{ movieData.title }}</span>
+                    <span @click="reposition" class="reposition">重新定位</span>
+                </template>
+            </van-cell>
             <horizontallist class="movie-list" v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
         </div>
 
@@ -77,6 +82,18 @@ export default {
     },
 
     methods: {
+        reposition () {
+            this.getMovie().then(_ => {
+                this.$toast.success('已重新定位');
+            });
+        },
+
+        getMovie () {
+            return this.GetCity().then(_ => { // 定位
+                this.getCityMovie();
+            });
+        },
+
         search () {
             this.$router.push('/douban/search');
         },
@@ -117,9 +134,7 @@ export default {
         },
 
         init () {
-            this.GetCity().then(_ => { // 定位
-                this.getCityMovie();
-            });
+            this.getMovie();
         }
     },
 
@@ -168,6 +183,11 @@ $city-movie-height: 234px;
 
     .movie-list {
         padding-left: 10px;
+    }
+
+    .reposition {
+        margin-left: 10px;
+        color: #3977ff;
     }
 }
 
