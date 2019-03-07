@@ -1,34 +1,32 @@
 <template>
-    <transition name="fade">
-        <div
-            v-show="value"
-            ref="myLoading"
-            class="my-loading-wrap"
-            :class="[fullscreen ? 'my-loading-fullscreen' : '', {
-                'black-bg': color === 'black',
-                'white-bg': color === 'white'
-            }]"
-            :style="style">
-            <div class="loading">
-                <div class="lds-css ng-scope">
-                    <div class="lds-spinner" :class="size">
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                        <div></div>
-                    </div>
+    <div
+        v-show="value"
+        ref="myLoading"
+        class="my-loading-wrap"
+        :class="[fullscreen ? 'my-loading-fullscreen' : '', {
+            'black-bg': color === 'black',
+            'white-bg': color === 'white'
+        }]"
+        :style="style">
+        <div class="loading">
+            <div class="lds-css ng-scope">
+                <div class="lds-spinner" :class="size">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                    <div></div>
                 </div>
             </div>
         </div>
-    </transition>
+    </div>
 </template>
 
 <script>
@@ -98,18 +96,16 @@ export default {
         this.setPrentPosition();
     },
 
-    destroyed() {
-        let classList = this.parent.classList;
-
-        if (classList.contains(POSITION_CLASS)) {
-            classList.remove(POSITION_CLASS);
-        }
-    },
-
     watch: {
         value (val) {
             if (val) {
                 this.setPrentPosition();
+            } else {
+                let classList = this.parent.classList;
+
+                if (classList.contains(POSITION_CLASS)) {
+                    classList.remove(POSITION_CLASS);
+                }
             }
         }
     },
@@ -117,12 +113,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.fade-enter-active, .fade-leave-active {
-  transition: opacity .3s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-}
 @keyframes lds-spinner {
   0% {
     opacity: 1;
@@ -264,7 +254,7 @@ export default {
     }
 
     &.black-bg {
-        background: rgba(0, 0, 0, .3)
+        background: rgba(0, 0, 0, .8)
     }
 
     &.white-bg {

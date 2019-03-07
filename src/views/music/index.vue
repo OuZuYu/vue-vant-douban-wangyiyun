@@ -21,7 +21,7 @@
                         <h3 class="title">推荐歌单</h3>
 
                         <ul class="personalized-list">
-                            <li @click="handleListSelect(item.id)" class="personalized-item" v-for="item in personalizedData" :key="item.id">
+                            <li @click="handleListSelect(item)" class="personalized-item" v-for="item in personalizedData" :key="item.id">
                                 <img v-lazy="item.picUrl" width="112" height="112">
                                 <div class="item-title">{{ item.name }}</div>
                                 <div class="play-count-wrap">
@@ -54,13 +54,15 @@ export default {
             personalizedData: [],
             loading: true,
             songListComp: null,
-            selectedId: ''
+            selectedId: '',
+            selectedbg: ''
         }
     },
 
     methods: {
-        handleListSelect (id) {
-            this.selectedId = id;
+        handleListSelect (item) {
+            this.selectedId = item.id;
+            this.selectedbg = item.picUrl;
             this.showSongList();
         },
 
@@ -69,7 +71,8 @@ export default {
             // 创建songlist组件api
             this.songListComp = this.songListComp || this.$createSongList({
                 $props: {
-                    id: 'selectedId'
+                    id: 'selectedId',
+                    coverBackground: 'selectedbg'
                 }
             })
             this.songListComp.show()

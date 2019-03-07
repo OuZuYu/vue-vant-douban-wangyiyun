@@ -6,7 +6,7 @@
             </topheader>
 
             <div class="poster-wrap">
-                <img class="poster" v-lazy="detailData.images && detailData.images.medium">
+                <img class="poster" v-lazy="movie.images && movie.images.medium">
             </div>
 
             <movieinfo :detail-data="detailData"></movieinfo>
@@ -21,7 +21,7 @@
                 </div>
             </section>
 
-            <section class="casts-wrap van-hairline--top">
+            <section class="casts-wrap van-hairline--top" v-show="directorsAndActors.length">
                 <h3 class="title">影人</h3>
                 <ul class="casts-list">
                     <li class="cast-item" v-for="cast of directorsAndActors" :key="cast.id" @click="handleCastSelect(cast)">
@@ -32,9 +32,9 @@
                 </ul>
             </section>
 
-            <moviecomment :comments="detailData.popular_comments" :reviews="detailData.popular_reviews"></moviecomment>
+            <moviecomment v-show="detailData.popular_comments" :comments="detailData.popular_comments" :reviews="detailData.popular_reviews"></moviecomment>
 
-            <my-loading size="medium" top="44" v-model="loading"></my-loading>
+            <my-loading size="medium" color="black" top="44" v-model="loading"></my-loading>
         </div>
     </transition>
 </template>
@@ -57,7 +57,10 @@ export default {
     components: { operate, movieinfo, moviecomment, topheader },
 
     props: {
-        movie: Object
+        movie: {
+            type: Object,
+            default () { return {} }
+        }
     },
 
     computed: {
@@ -125,7 +128,11 @@ export default {
         },
 
         async init () {
-            this.$refs.movieDetail.scrollTop = 0; // 初始化滚动条
+
+            // 初始化滚动条与数据
+            this.$refs.movieDetail.scrollTop = 0;
+            this.detailData = {};
+            this.directorsAndActors = [];
             await this.getDetail();
             this.setDirectorsAndActors();
             this.isSummaryExpand = this.detailData.summary.length < SUMMARY_TEXT_NUM; // 初始化剧情简介是否显示展开按钮

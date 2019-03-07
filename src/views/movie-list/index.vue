@@ -87,7 +87,7 @@ export default {
     methods: {
         reposition () {
             this.getMovie().then(_ => {
-                this.$toast.success('已重新定位');
+                this.$toast('已重新定位');
             });
         },
 

@@ -1,21 +1,20 @@
 <template>
     <transition name="slide">
-        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible">
+        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible" @transitionend="handleTransitionEnd">
             <div class="top">
-                <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ playListData.coverImgUrl })` }"></div>
+                <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ coverBackground })` }"></div>
 
                 <topheader :class="{'header-bg': !changeTopStyle}" @back="hide">{{ !changeTopStyle ? '歌单' : playListData.name }}</topheader>
 
-                <img class="top-img" v-lazy="playListData.coverImgUrl" width="130" height="130">
+                <img class="top-img" v-lazy="coverBackground" width="130" height="130">
 
                 <div class="list-name">{{ playListData.name }}</div>
             </div>
 
             <div class="list-wrap">
                 <songlist :list-data="playListData.tracks" @selectSong="handleSongSelect"></songlist>
+                <my-loading size="small" v-model="loading"></my-loading>
             </div>
-
-            <my-loading size="medium" top="44" v-model="loading"></my-loading>
         </div>
     </transition>
 </template>
@@ -36,7 +35,9 @@ export default {
     mixins: [ populMixin ],
 
     props: {
-        id: Number
+        id: Number,
+
+        coverBackground: String
     },
 
     computed: {
@@ -61,9 +62,14 @@ export default {
             'ChangeIsFullScreen'
         ]),
 
-        init () {
-            this.$refs.songListDetail.scrollTop = 0;
+        // 过度完成再获取数据，因为如果在过度过程中就获取完了数据，那么过度的过程在手机上实测会卡顿。
+        handleTransitionEnd () {
             this.getPlayList(this.id);
+        },
+
+        init () {
+            this.playListData = {};
+            this.$refs.songListDetail.scrollTop = 0;
         },
 
         handleSongSelect (index, item) {
@@ -72,16 +78,6 @@ export default {
 
             // 渲染全屏版的播放器
             this.ChangeIsFullScreen(true);
-        },
-
-        showSongPlay () {
-
-            // 创建songlist组件api
-            this.songPlayComp = this.songPlayComp || this.$createMusicPlay({});
-            this.songPlayComp.show();
-            // this.$nextTick(_ => {
-            //     this.songPlayComp.init();
-            // })
         },
 
         handleListScroll (e) {
@@ -106,17 +102,18 @@ export default {
 @import '../../scss/mixin';
 $top-height: 270px;
 
-.slide-enter-active, .slide-leave-active {
-  transition: transform .4s;
-}
+// .slide-enter-active, .slide-leave-active {
+//     transition: transform .2s;
+// }
 
 .slide-enter, .slide-leave-to {
-  transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
 }
 
 .song-list-detail {
     @include fixedLayout;
     z-index: 100;
+    transition: transform .2s;
 }
 
 .top {
