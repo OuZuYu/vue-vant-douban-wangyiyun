@@ -16,12 +16,13 @@
                     <span @click="reposition" class="reposition">重新定位</span>
                 </template>
             </van-cell>
-            <horizontallist class="movie-list" v-loading="cityMovieLoading" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
+            <horizontallist class="movie-list" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
+            <my-loading v-model="cityMovieLoading"></my-loading>
         </div>
 
         <van-tabs swipeable color="#42bd56" class="movie-tabs">
             <van-tab title="即将上映">
-                <div class="list-wrap" v-loading="comingSoonLoading">
+                <div class="list-wrap">
                     <van-list
                         :offset="0"
                         v-model="comingSoonLoading"
@@ -30,10 +31,11 @@
                         @load="getComingSoonMovie">
                             <verticallist :list-data="comingSoonData" @selectMovie="handleMovieSelect"></verticallist>
                     </van-list>
+                    <my-loading v-model="comingSoonLoading"></my-loading>
                 </div>
             </van-tab>
             <van-tab title="Top250">
-                <div class="list-wrap" v-loading="top250Loading">
+                <div class="list-wrap">
                     <van-list
                         :offset="0"
                         v-model="top250Loading"
@@ -42,6 +44,7 @@
                         @load="getTop250Movie">
                         <verticallist :list-data="top250Data" @selectMovie="handleMovieSelect"></verticallist>
                     </van-list>
+                    <my-loading v-model="top250Loading"></my-loading>
                 </div>
             </van-tab>
         </van-tabs>

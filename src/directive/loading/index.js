@@ -1,3 +1,7 @@
+/**
+ * 这个指令操作dom，性能不好，已改用 my-loadingu 组件。
+ */
+
 import { getDistance, cssUtils } from '@/utils/dom';
 import loadingGif from './loading.gif';
 

@@ -34,7 +34,7 @@ export function lrc2Json (lrc) {
         let minute = time.substr(0, 2)
         let second = time.substr(3, 2)
         let ms = time.substr(6, 2)
-        console.log(match)
+
         json.push({
             time,
             ms: parseInt(minute) * 60 * 1000 + parseInt(second) * 1000 + parseInt(ms) * 10,

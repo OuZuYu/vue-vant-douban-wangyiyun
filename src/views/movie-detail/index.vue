@@ -1,6 +1,6 @@
 <template>
     <transition name="van-slide-right">
-        <div v-loading="loading" class="movie-detail" v-show="visible" ref="movieDetail">
+        <div class="movie-detail" v-show="visible" ref="movieDetail">
             <topheader @back="hide">
                 <i class="movie-icon iconfont icon-dianying"></i>电影
             </topheader>
@@ -33,6 +33,8 @@
             </section>
 
             <moviecomment :comments="detailData.popular_comments" :reviews="detailData.popular_reviews"></moviecomment>
+
+            <my-loading size="medium" top="44" v-model="loading"></my-loading>
         </div>
     </transition>
 </template>

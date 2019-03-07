@@ -1,6 +1,6 @@
 <template>
     <transition name="slide">
-        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-loading="loading" v-show="visible">
+        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible">
             <div class="top">
                 <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ playListData.coverImgUrl })` }"></div>
 
@@ -14,6 +14,8 @@
             <div class="list-wrap">
                 <songlist :list-data="playListData.tracks" @selectSong="handleSongSelect"></songlist>
             </div>
+
+            <my-loading size="medium" top="44" v-model="loading"></my-loading>
         </div>
     </transition>
 </template>
