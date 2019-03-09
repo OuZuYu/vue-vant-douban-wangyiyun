@@ -39,7 +39,8 @@ export function getPlayList (id) {
         url: BASE + '/playlist/detail',
         method: 'get',
         params: {
-            id
+            id,
+            t: Date.now()
         }
     })
 }

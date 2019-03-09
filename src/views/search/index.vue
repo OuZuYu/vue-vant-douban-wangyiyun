@@ -35,7 +35,7 @@
         </div>
 
         <transition name="van-fade">
-            <div class="result-list" v-show="keyword || tag" v-loading="searchLoading">
+            <div class="result-list" v-show="keyword || tag">
                 <van-list
                     :offset="0"
                     v-model="searchLoading"
@@ -44,6 +44,7 @@
                     @load="getSearchResult">
                     <verticallist :list-data="searchResultData" @selectMovie="handleMovieSelect"></verticallist>
                 </van-list>
+                <my-loading size="medium" v-model="searchLoading"></my-loading>
             </div>
         </transition>
     </div>

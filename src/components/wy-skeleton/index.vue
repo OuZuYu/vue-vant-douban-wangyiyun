@@ -17,7 +17,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-$skeleton-bg: linear-gradient(left, #ececec, #f3f3f3);
+$skeleton-bg: linear-gradient(to left, #ececec, #f3f3f3);
 
 .skeleton {
     z-index: 100;

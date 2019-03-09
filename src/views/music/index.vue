@@ -11,7 +11,7 @@
                 <my-tab-item name="推荐">
                     <div class="swipe-wrap">
                         <my-swipe class="swipe" height="160">
-                            <my-swipe-item v-for="item in bannerData" >
+                            <my-swipe-item v-for="(item, index) in bannerData" :key="index">
                                 <img width="100%" height="100%" v-lazy="item.imageUrl">
                             </my-swipe-item>
                         </my-swipe>
@@ -174,8 +174,8 @@ $header-height: 46px;
 
         .play-count-wrap {
             position: absolute;
-            right: 2px;
-            top: 2px;
+            right: 10px;
+            top: 4px;
             color: #fff;
         }
     }
