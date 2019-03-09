@@ -1,12 +1,10 @@
 <template>
-    <transition name="slide">
-        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible" @transitionend="handleTransitionEnd">
+    <transition name="slide" mode="out-in">
+        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible">
             <div class="top">
                 <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ coverBackground })` }"></div>
 
                 <topheader :class="{'header-bg': !changeTopStyle}" @back="hide">{{ !changeTopStyle ? '歌单' : playListData.name }}</topheader>
-
-                <img class="top-img" v-lazy="coverBackground" width="130" height="130">
 
                 <div class="list-name">{{ playListData.name }}</div>
             </div>
@@ -62,14 +60,10 @@ export default {
             'ChangeIsFullScreen'
         ]),
 
-        // 过度完成再获取数据，因为如果在过度过程中就获取完了数据，那么过度的过程在手机上实测会卡顿。
-        handleTransitionEnd () {
-            this.getPlayList(this.id);
-        },
-
         init () {
             this.playListData = {};
             this.$refs.songListDetail.scrollTop = 0;
+            this.getPlayList(this.id)
         },
 
         handleSongSelect (index, item) {
@@ -89,9 +83,8 @@ export default {
             return getPlayList(id).then(val => {
                 if (val.code === 200) {
                     this.playListData = setSongData(val.playlist);
+                    this.loading = false;
                 }
-
-                this.loading = false;
             })
         }
     }
@@ -102,18 +95,18 @@ export default {
 @import '../../scss/mixin';
 $top-height: 270px;
 
-// .slide-enter-active, .slide-leave-active {
-//     transition: transform .2s;
-// }
+.slide-enter-active, .slide-leave-active {
+    transition: transform .2s;
+}
 
 .slide-enter, .slide-leave-to {
+    opacity: 0;
     transform: translate3d(100%, 0, 0);
 }
 
 .song-list-detail {
     @include fixedLayout;
     z-index: 100;
-    transition: transform .2s;
 }
 
 .top {
@@ -128,25 +121,17 @@ $top-height: 270px;
         height: 100%;
         background-size: cover;
         background-position: 0 30%;
-        filter: blur(20px);
 
         &:after {
             content: ' ';
             z-index: 1;
             @include absoluteLayout;
-            background-color: rgba(0,0,0,.25);
+            background-color: rgba(0,0,0,.3);
         }
     }
 
     .header-bg {
         background-color: transparent;
-    }
-
-    .top-img {
-        z-index: 2;
-        @include absoluteLayout(50%, auto, auto, 50%);
-        transform: translate3d(-50%, -50%, 0);
-        border-radius: 4px;
     }
 
     .list-name {
@@ -163,8 +148,9 @@ $top-height: 270px;
 .list-wrap {
     z-index: 3;
     @include absoluteLayout($top-height);
+    margin-top: -10px;
     background: $white;
-    border-radius: 10px 10px 0 0;
+    border-radius: 12px 12px 0 0;
 }
 </style>
 
