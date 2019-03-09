@@ -100,8 +100,6 @@ import { mapActions } from 'vuex';
 import { scrollTo } from '@/utils/common';
 import { lrc2Json } from '@/utils/song';
 
-const LYRIC_HEIGHT = 30; // 歌词div高度
-
 export default {
     name: 'MusicPlay',
 
@@ -120,7 +118,7 @@ export default {
 
         songSrc () {
             if (this.curSong) {
-            return `https://music.163.com/song/media/outer/url?id=${this.curSong.id}`;
+                return `https://music.163.com/song/media/outer/url?id=${this.curSong.id}`;
             }
         },
 
@@ -141,11 +139,12 @@ export default {
 
         // 监听歌词高亮index变化
         activeLyricIndex (val) {
+            if (!this.$refs.lyricItem) return;
             let lyricList = this.$refs.lyricList;
 
-            // 五行以上才开始滚动歌词，每次滚动30px（每个歌词div高度）。
+            // 五行以上才开始滚动歌词。
             if (val > 5) {
-                scrollTo(lyricList, lyricList.scrollTop, (val - 5) * LYRIC_HEIGHT, 1000);
+                scrollTo(lyricList, lyricList.scrollTop, this.$refs.lyricItem[val - 5].offsetTop, 1000);
             } else {
                 scrollTo(lyricList, lyricList.scrollTop, 0, 1000);
             }
@@ -235,7 +234,9 @@ export default {
             this.songLoading = false;
             this.playing = true;
             this.isPause = false;
-            this.duration = e.target.duration;
+
+            // 如果不加定时器，小米自带浏览器获取不了duration。
+            setTimeout(() => {this.duration = e.target.duration}, 150);
         },
 
         onEnd () {
@@ -308,7 +309,7 @@ $lyric-height: 30px;
 }
 
 .fullscreen-player {
-    z-index: 200;
+    z-index: 5000;
     position: fixed;
     left: 0;
     right: 0;
@@ -322,7 +323,7 @@ $lyric-height: 30px;
     opacity: .6;
     @include absoluteLayout;
     background-size: cover;
-    filter: blur(30px);
+    filter: blur(12px);
 
     &:after {
         content: ' ';
@@ -436,7 +437,7 @@ $lyric-height: 30px;
 
 .mini-player-wrap {
     display: flex;
-    z-index: 200;
+    z-index: 5000;
     position: fixed;
     bottom: 60px;
     right: 0;
@@ -474,7 +475,7 @@ $lyric-height: 30px;
     font-size: 16px;
 
     .lyric-text {
-        @include heightLineHeight($lyric-height);
+        line-height: 30px;
 
         &.active {
             color: $theme-wy;
