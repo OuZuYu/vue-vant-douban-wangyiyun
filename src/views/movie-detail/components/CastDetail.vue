@@ -1,6 +1,6 @@
 <template>
     <transition name="van-slide-right">
-        <div class="cast-detail" v-show="visible" ref="castDetail" v-loading="loading">
+        <div class="cast-detail" v-show="visible" ref="castDetail">
             <topheader @back="hide" class="header">
                 <i class="cast-icon iconfont icon-dianyingzhiye-yingrenbang"></i>影人
             </topheader>
@@ -39,6 +39,8 @@
                     <horizontallist @selectMovie="handleMovieSelect" class="work-list" :list-data="works"></horizontallist>
                 </div>
             </div>
+
+            <my-loading size="medium" color="black" top="42" v-model="loading"></my-loading>
         </div>
     </transition>
 </template>
@@ -135,7 +137,7 @@ export default {
 
 .cast-detail {
     @include fixedLayout;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .detail-content {

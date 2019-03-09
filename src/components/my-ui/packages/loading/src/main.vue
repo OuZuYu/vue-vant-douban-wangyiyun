@@ -242,7 +242,7 @@ export default {
 
 .my-loading-wrap {
     position: absolute;
-    z-index: 10000;
+    z-index: 1000;
     margin: 0;
     top: 0;
     right: 0;

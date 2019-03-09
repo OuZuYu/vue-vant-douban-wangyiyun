@@ -147,7 +147,7 @@ $poster-bg: #555;
 
 .movie-detail {
     @include fixedLayout;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .poster-wrap {
