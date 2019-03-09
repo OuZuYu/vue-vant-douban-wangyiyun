@@ -7,12 +7,6 @@
     @touchend.prevent="onTouchEnd">
         <div class="bar-inner">
             <div class="progress" :style="{ width: displayPercent + '%' }" ref="progress"></div>
-            <div
-            ref="progressBtn"
-            class="progress-btn"
-            :style="{ left: displayPercent + '%' }"
-            >
-            </div>
         </div>
     </div>
 </template>
@@ -91,23 +85,24 @@ $progress-inner-height: 4px;
     background:rgba(0,0,0,.3);
 
     .progress {
+        position: relative;
         width: 0;
         height: 100%;
         background: $theme-wy;
-    }
-}
 
-.progress-btn {
-    position: absolute;
-    left: 0;
-    top: -6px;
-    width: 16px;
-    border-radius: 50%;
-    background: $theme-wy;
-    box-sizing: border-box;
-    border: 5px solid #f1f1f1;
-    @include heightLineHeight(16px);
-    text-align: center;
-    border-radius: 50%;
+        &:after {
+            content: ' ';
+            position: absolute;
+            right: -16px;
+            top: -6px;
+            width: 16px;
+            background: $theme-wy;
+            box-sizing: border-box;
+            border: 5px solid #f1f1f1;
+            @include heightLineHeight(16px);
+            text-align: center;
+            border-radius: 50%;
+        }
+    }
 }
 </style>
