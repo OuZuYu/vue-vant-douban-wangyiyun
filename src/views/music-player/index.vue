@@ -236,7 +236,13 @@ export default {
             this.isPause = false;
 
             // 如果不加定时器，小米自带浏览器获取不了duration。
-            setTimeout(() => {this.duration = e.target.duration}, 150);
+            let timer = setInterval(() => {
+                this.duration = e.target.duration
+
+                if (this.duration) {
+                  clearInterval(timer)
+                }
+            }, 150);
         },
 
         onEnd () {
