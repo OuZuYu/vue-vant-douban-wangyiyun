@@ -18,6 +18,7 @@ import '@/components/my-ui/src';
 
 Vue.config.productionTip = false
 
+// 这个是删除loading指令生成的元素的，现已弃用loading指令，改用loading组件了。
 router.beforeEach((to, from, next) => {
   delLoading();
   next();
