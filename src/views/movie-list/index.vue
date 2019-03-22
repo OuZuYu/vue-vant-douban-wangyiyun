@@ -13,7 +13,8 @@
             <van-cell icon="location-o">
                 <template slot="title">
                     <span>{{ movieData.title }}</span>
-                    <span @click="reposition" class="reposition">重新定位</span>
+                    <i @click="reposition" class="iconfont icon-refresh-1-copy"></i>
+                    <i @click="editCity" class="iconfont icon-edit"></i>
                 </template>
             </van-cell>
             <horizontallist class="movie-list" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
@@ -48,6 +49,10 @@
                 </div>
             </van-tab>
         </van-tabs>
+
+        <van-dialog show-cancel-button v-model="cityPopup" @confirm="onConfirm">
+            <van-field label="城市名" v-model="city" class="city-field" placeholder="例:广州或广州市"/>
+        </van-dialog>
     </div>
 </template>
 
@@ -80,20 +85,41 @@ export default {
             isTop250Loaded: false,
             isComingSoonLoaded: false,
             top250Index: 0,
-            comingSoonIndex: 0
+            comingSoonIndex: 0,
+            cityPopup: false,
+            city: ''
         }
     },
 
     methods: {
         reposition () {
-            this.getMovie().then(_ => {
+            this.locateAndGetMovie().then(_ => {
                 this.$toast('已重新定位');
             });
         },
 
-        getMovie () {
+        editCity () {
+            this.city = '';
+            this.cityPopup = true;
+        },
+
+        onConfirm () {
+            if (!this.city) {
+                this.locateAndGetMovie();
+                return;
+            }
+
+            if (/^.+市$/.test(this.city)) { // 切掉"市"
+                this.city = this.city.slice(0, -1);
+            }
+
+            this.setCity(this.city);
+            this.getCityMovie(this.myCity);
+        },
+
+        locateAndGetMovie () {
             return this.GetCity().then(_ => { // 定位
-                this.getCityMovie();
+                this.getCityMovie(this.myCity);
             });
         },
 
@@ -101,12 +127,12 @@ export default {
             this.$router.push('/douban/search');
         },
 
-        getCityMovie () {
+        getCityMovie (city) {
             this.cityMovieLoading = true;
             let params = {
                 start: 0,
-                count: 1000,
-                city: this.myCity.slice(0, -1)
+                count: 1000, // 间接获取全部电影
+                city: city
             }
             getMovie(params).then(res => {
                 this.movieData = res;
@@ -137,7 +163,11 @@ export default {
         },
 
         init () {
-            this.getMovie();
+            if (this.myCity !== '定位中...') { // 已定位
+                this.getCityMovie(this.myCity);
+            } else { // 未定位的话定位再获取某城市电影
+                this.locateAndGetMovie();
+            }
         }
     },
 
@@ -188,9 +218,9 @@ $city-movie-height: 234px;
         padding-left: 10px;
     }
 
-    .reposition {
-        margin-left: 10px;
-        color: #3977ff;
+    .iconfont {
+        margin-left: 14px;
+        color: #4a82ff;
     }
 }
 
@@ -204,5 +234,9 @@ $city-movie-height: 234px;
         overflow-x: hidden;
         overflow-y: auto;
     }
+}
+
+.city-field {
+    margin: 10px 0;
 }
 </style>

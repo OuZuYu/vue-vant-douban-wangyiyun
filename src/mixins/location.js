@@ -1,4 +1,4 @@
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapMutations } from 'vuex'
 
 export default {
     computed: {
@@ -11,6 +11,10 @@ export default {
         ...mapActions([
             'GetCity'
         ]),
+
+        ...mapMutations({
+          setCity: 'SET_CITY'
+        })
 
         // 直接用百度地图api获取城市
         /* getCity() {

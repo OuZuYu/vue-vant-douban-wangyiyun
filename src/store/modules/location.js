@@ -19,8 +19,7 @@ function locationBySouhu (commit, state) {
                 console.log('搜狐定位:' + returnCitySN.cname)
                 let city = returnCitySN.cname.match(/.+?(省|市|自治区|自治州|县|区)/g);
                 let index = city.findIndex(val => val.indexOf('市') !== -1); // 找到第一个市
-                commit('SET_CITY', city[index]);
-                resolve(returnCitySN);
+                resolve(city[index]);
             }
         }
     });
@@ -31,8 +30,7 @@ function locationByBaidu (commit, state) {
     return new Promise((resolve, reject) => {
         city.get(res => {
             console.log('百度定位:' + res.name)
-            commit('SET_CITY', res.name);
-            resolve(res);
+            resolve(res.name);
         })
     });
 }
@@ -48,17 +46,26 @@ const location = {
 
     mutations: {
         SET_CITY: (state, city) => {
-            state.myCity = city || '广州市';
+            state.myCity = city || '广州';
+        },
+
+        SET_FLAG (state) {
+            state.flag = !state.flag;
         }
     },
 
     actions: {
-        GetCity({ commit, state }) {
+        async GetCity({ commit, state }) {
 
             // 轮流使用搜狐或百度定位
-            let result = state.flag ? locationBySouhu(commit, state) : locationByBaidu(commit, state);
-            state.flag = !state.flag;
-            return result;
+            let city = state.flag ? await locationBySouhu() : await locationByBaidu();
+            console.log(city)
+            if (/^.+市$/.test(city)) {
+                city = city.slice(0, -1)
+            }
+            commit('SET_CITY', city);
+            commit('SET_FLAG');
+            return city;
         },
     }
 }
