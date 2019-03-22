@@ -1,5 +1,5 @@
 <template>
-    <transition name="van-slide-right">
+    <transition name="slide" mode="out-in">
         <div class="movie-detail" v-show="visible" ref="movieDetail">
             <topheader @back="hide">
                 <i class="movie-icon iconfont icon-dianying"></i>电影
@@ -144,6 +144,15 @@ export default {
 <style lang="scss" scoped>
 @import '../../scss/mixin';
 $poster-bg: #555;
+
+.slide-enter-active, .slide-leave-active {
+    transition: transform .2s;
+}
+
+.slide-enter, .slide-leave-to {
+    opacity: 0;
+    transform: translate3d(100%, 0, 0);
+}
 
 .movie-detail {
     @include fixedLayout;
