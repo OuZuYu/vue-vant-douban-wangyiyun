@@ -29,3 +29,30 @@ export function scrollTo (dom, fromY, toY, duration = 500) {
     }
     scroll(from, to, v);
 }
+
+// 节流
+export function throttle (fn, wait) {
+    let timmer = null;
+
+    return function () {
+        if (!timmer) { // 只有当上一个定时器完成，才把执行fn添加到队列。
+            timmer = setTimeout(() => {
+                fn.apply(this, arguments);
+                timmer = null;
+            }, wait);
+        }
+    }
+}
+
+// 防抖
+export function debounce (fn, wait) {
+    let timmer = null;
+
+    return function () {
+        if (timmer) clearTimeout(timmer);
+
+        timmer = setTimeout(() => {
+            fn.apply(this, arguments);
+        }, wait);
+    }
+}

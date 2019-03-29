@@ -1,6 +1,6 @@
 <template>
     <transition name="slide" mode="out-in">
-        <div class="song-list-detail" ref="songListDetail" @scroll="handleListScroll" v-show="visible">
+        <div class="song-list-detail" ref="songListDetail" v-show="visible">
             <div class="top">
                 <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ coverBackground })` }"></div>
 
@@ -24,6 +24,7 @@ import topheader from '@/components/header';
 import songlist from '@/components/song-list';
 import { setSongData } from '@/utils/song';
 import { mapActions } from 'vuex'
+import { throttle } from '@/utils/common';
 
 export default {
     name: 'SongList',
@@ -74,10 +75,6 @@ export default {
             this.ChangeIsFullScreen(true);
         },
 
-        handleListScroll (e) {
-            this.changeTopStyle = e.target.scrollTop > this.coverBgHeight - 50;
-        },
-
         getPlayList (id) {
             this.loading = true;
             return getPlayList(id).then(val => {
@@ -87,6 +84,12 @@ export default {
                 }
             })
         }
+    },
+
+    mounted() {
+        this.$refs.songListDetail.addEventListener('scroll', throttle(() => {
+            this.changeTopStyle = this.$refs.songListDetail.scrollTop > this.coverBgHeight - 50;
+        }, 200), { passive: true })
     }
 }
 </script>
