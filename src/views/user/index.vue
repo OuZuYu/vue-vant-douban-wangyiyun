@@ -8,7 +8,7 @@
       <van-tabs swipeable color="#42bd56" class="tab-wrap">
         <van-tab title="想看">
           <div class="list-wrap" v-if="wantSeeMovies.length">
-            <verticallist :list-data="wantSeeMovies" @selectMovie="handleMovieSelect"></verticallist>
+            <vertical-list :list-data="wantSeeMovies" @selectMovie="handleMovieSelect"></vertical-list>
           </div>
           <div class="tip" v-else>
             <div class="tip-item">--没有想看的电影--</div>
@@ -18,7 +18,7 @@
 
         <van-tab title="看过">
           <div class="list-wrap" v-if="haveSeenMovies.length">
-            <verticallist :list-data="haveSeenMovies" @selectMovie="handleMovieSelect"></verticallist>
+            <vertical-list :list-data="haveSeenMovies" @selectMovie="handleMovieSelect"></vertical-list>
           </div>
           <div class="tip" v-else>
             <div class="tip-item">--没有看过的电影--</div>
@@ -30,12 +30,12 @@
 </template>
 
 <script>
-import verticallist from '@/components/vertical-list';
+import VerticalList from '@/components/vertical-list';
 import { mapState } from 'vuex'
 import showMovieDetailMixin from '@/mixins/showMovieDetail';
 
 export default {
-  components: { verticallist },
+  components: { VerticalList },
 
   mixins: [ showMovieDetailMixin ],
 

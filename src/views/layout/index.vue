@@ -1,16 +1,16 @@
 <template>
     <div>
-        <appmain></appmain>
-        <tabs></tabs>
+        <app-main></app-main>
+        <app-tabs></app-tabs>
     </div>
 </template>
 
 <script>
-import appmain from './components/AppMain';
-import tabs from './components/Tabs';
+import AppMain from './components/AppMain';
+import AppTabs from './components/AppTabs';
 
 export default {
-    components: { appmain, tabs }
+    components: { AppMain, AppTabs }
 }
 </script>
 

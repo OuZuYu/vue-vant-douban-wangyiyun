@@ -4,13 +4,13 @@
             <div class="top">
                 <div class="cover-bg" ref="coverBg" :style="{ 'background-image': `url(${ coverBackground })` }"></div>
 
-                <topheader :class="{'header-bg': !changeTopStyle}" @back="hide">{{ !changeTopStyle ? '歌单' : playListData.name }}</topheader>
+                <top-header :class="{'header-bg': !changeTopStyle}" @back="hide">{{ !changeTopStyle ? '歌单' : playListData.name }}</top-header>
 
                 <div class="list-name">{{ playListData.name }}</div>
             </div>
 
             <div class="list-wrap">
-                <songlist :list-data="playListData.tracks" @selectSong="handleSongSelect"></songlist>
+                <song-list :list-data="playListData.tracks" @selectSong="handleSongSelect"></song-list>
                 <my-loading size="small" v-model="loading"></my-loading>
             </div>
         </div>
@@ -20,8 +20,8 @@
 <script>
 import populMixin from '@/mixins/popup';
 import { getPlayList } from '@/api/wangyi';
-import topheader from '@/components/header';
-import songlist from '@/components/song-list';
+import TopHeader from '@/components/header';
+import SongList from '@/components/song-list';
 import { setSongData } from '@/utils/song';
 import { mapActions } from 'vuex'
 import { throttle } from '@/utils/common';
@@ -29,7 +29,7 @@ import { throttle } from '@/utils/common';
 export default {
     name: 'SongList',
 
-    components: { topheader, songlist },
+    components: { TopHeader, SongList },
 
     mixins: [ populMixin ],
 

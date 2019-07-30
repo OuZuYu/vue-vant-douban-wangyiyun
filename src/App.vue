@@ -2,16 +2,16 @@
   <div id="app">
     <router-view/>
     <welcome></welcome>
-    <musicplayer></musicplayer>
+    <music-player></music-player>
   </div>
 </template>
 
 <script>
-import welcome from '@/views/welcome';
-import musicplayer from '@/views/music-player';
+import Welcome from '@/views/welcome';
+import MusicPlayer from '@/views/music-player';
 
 export default {
-  components: { welcome, musicplayer },
+  components: { Welcome, MusicPlayer },
 
   data () {
     return {

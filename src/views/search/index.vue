@@ -42,7 +42,7 @@
                     :finished="isSearchLoaded"
                     finished-text="没有更多了"
                     @load="getSearchResult">
-                    <verticallist :list-data="searchResultData" @selectMovie="handleMovieSelect"></verticallist>
+                    <vertical-list :list-data="searchResultData" @selectMovie="handleMovieSelect"></vertical-list>
                 </van-list>
                 <my-loading size="medium" v-model="searchLoading"></my-loading>
             </div>
@@ -53,7 +53,7 @@
 <script>
 import { searchMovie } from '@/api/douban';
 import showMovieDetailMixin from '@/mixins/showMovieDetail';
-import verticallist from '@/components/vertical-list';
+import VerticalList from '@/components/vertical-list';
 import { mapActions } from 'vuex'
 
 const GET_COUNT = 10;
@@ -61,7 +61,7 @@ const GET_COUNT = 10;
 export default {
     mixins: [ showMovieDetailMixin ],
 
-    components: { verticallist },
+    components: { VerticalList },
 
     computed: {
         searchHistory () {

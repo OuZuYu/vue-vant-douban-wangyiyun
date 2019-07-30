@@ -1,9 +1,9 @@
 <template>
     <transition name="van-slide-right">
         <div class="cast-detail" v-show="visible" ref="castDetail">
-            <topheader @back="hide" class="header">
+            <top-header @back="hide" class="header">
                 <i class="cast-icon iconfont icon-dianyingzhiye-yingrenbang"></i>影人
-            </topheader>
+            </top-header>
 
             <div class="detail-content">
                 <h2 class="name">{{ castData.name }} - {{ castData.name_en }}</h2>
@@ -36,7 +36,7 @@
 
                 <div class="works-wrap">
                     <h3 class="title">代表作品</h3>
-                    <horizontallist @selectMovie="handleMovieSelect" class="work-list" :list-data="works"></horizontallist>
+                    <horizontal-list @selectMovie="handleMovieSelect" class="work-list" :list-data="works"></horizontal-list>
                 </div>
             </div>
 
@@ -47,9 +47,9 @@
 
 <script>
 import populMixin from '@/mixins/popup';
-import topheader from '@/components/header';
+import TopHeader from '@/components/header';
 import { getCastDetail } from '@/api/douban';
-import horizontallist from '@/components/horizontal-list';
+import HorizontalList from '@/components/horizontal-list';
 import showMovieDetailMixin from '@/mixins/showMovieDetail';
 
 const SUMMARY_TEXT_NUM = 65
@@ -65,8 +65,8 @@ export default {
     },
 
     components: {
-        topheader,
-        horizontallist
+        TopHeader,
+        HorizontalList
     },
 
     mixins: [ populMixin, showMovieDetailMixin ],

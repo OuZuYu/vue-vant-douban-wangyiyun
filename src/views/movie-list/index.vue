@@ -17,7 +17,7 @@
                     <i @click="editCity" class="iconfont icon-edit"></i>
                 </template>
             </van-cell>
-            <horizontallist class="movie-list" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontallist>
+            <horizontal-list class="movie-list" :listData="movieData.subjects" @selectMovie="handleMovieSelect"></horizontal-list>
             <my-loading v-model="cityMovieLoading"></my-loading>
         </div>
 
@@ -30,7 +30,7 @@
                         :finished="isComingSoonLoaded"
                         finished-text="没有更多了"
                         @load="getComingSoonMovie">
-                            <verticallist :list-data="comingSoonData" @selectMovie="handleMovieSelect"></verticallist>
+                            <vertical-list :list-data="comingSoonData" @selectMovie="handleMovieSelect"></vertical-list>
                     </van-list>
                     <my-loading v-model="comingSoonLoading"></my-loading>
                 </div>
@@ -64,13 +64,13 @@ import {
 } from '@/api/douban';
 import locationMixin from '@/mixins/location';
 import showMovieDetailMixin from '@/mixins/showMovieDetail'; // 显示电影详情相关代码
-import verticallist from '@/components/vertical-list';
-import horizontallist from '@/components/horizontal-list';
+import VerticalList from '@/components/vertical-list';
+import HorizontalList from '@/components/horizontal-list';
 
 const GET_COUNT = 10;
 
 export default {
-    components: { verticallist, horizontallist },
+    components: { VerticalList, HorizontalList },
 
     mixins: [ locationMixin,  showMovieDetailMixin ],
 

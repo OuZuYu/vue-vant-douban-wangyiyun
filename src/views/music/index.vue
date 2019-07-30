@@ -41,11 +41,11 @@
 </template>
 
 <script>
-import skeleton from '@/components/wy-skeleton';
+import Skeleton from '@/components/wy-skeleton';
 import { getRecommonData } from '@/api/wangyi';
 
 export default {
-    components: { skeleton },
+    components: { Skeleton },
 
     data () {
         return {

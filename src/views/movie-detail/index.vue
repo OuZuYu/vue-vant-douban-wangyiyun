@@ -1,15 +1,15 @@
 <template>
     <transition name="slide" mode="out-in">
         <div class="movie-detail" v-show="visible" ref="movieDetail">
-            <topheader @back="hide">
+            <top-header @back="hide">
                 <i class="movie-icon iconfont icon-dianying"></i>电影
-            </topheader>
+            </top-header>
 
             <div class="poster-wrap">
                 <img class="poster" v-lazy="movie.images && movie.images.medium">
             </div>
 
-            <movieinfo :detail-data="detailData"></movieinfo>
+            <movie-info :detail-data="detailData"></movie-info>
 
             <operate :detail-data="detailData"></operate>
 
@@ -32,7 +32,7 @@
                 </ul>
             </section>
 
-            <moviecomment v-show="detailData.popular_comments" :comments="detailData.popular_comments" :reviews="detailData.popular_reviews"></moviecomment>
+            <movie-comment v-show="detailData.popular_comments" :comments="detailData.popular_comments" :reviews="detailData.popular_reviews"></movie-comment>
 
             <my-loading size="medium" color="black" top="44" v-model="loading"></my-loading>
         </div>
@@ -42,10 +42,10 @@
 <script>
 import { getMovieDetail } from '@/api/douban';
 import populMixin from '@/mixins/popup';
-import operate from './components/Operate';
-import movieinfo from './components/MovieInfo';
-import moviecomment from './components/MovieComment';
-import topheader from '@/components/header';
+import Operate from './components/Operate';
+import MovieInfo from './components/MovieInfo';
+import MovieComment from './components/MovieComment';
+import TopHeader from '@/components/header';
 
 const SUMMARY_TEXT_NUM = 65
 
@@ -54,7 +54,7 @@ export default {
 
     mixins: [ populMixin ],
 
-    components: { operate, movieinfo, moviecomment, topheader },
+    components: { Operate, MovieInfo, MovieComment, TopHeader },
 
     props: {
         movie: {
