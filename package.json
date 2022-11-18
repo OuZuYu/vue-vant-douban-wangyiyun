@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-service": "^3.2.0",
+    "@vue/cli-service": "^5.0.8",
     "babel-plugin-import": "^1.11.0",
     "node-sass": "^4.9.0",
     "postcss-pxtorem": "^4.0.1",
